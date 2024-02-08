@@ -20,6 +20,13 @@ class Character extends Model
     ];
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * The user that owns the character.
      */
     public function user()
@@ -28,9 +35,11 @@ class Character extends Model
     }
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
+     * The character infos that belong to the character.
      */
-    public $timestamps = false;
+    public function charInfos()
+    {
+        return $this->hasMany(CharInfo::class);
+    }
+
 }

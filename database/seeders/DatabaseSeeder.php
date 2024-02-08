@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\CharInfo::create([
             'info' => 'Il existe',
             'is_secret' => 1,
+            'character_id' => 1,
         ]);
     }
 }

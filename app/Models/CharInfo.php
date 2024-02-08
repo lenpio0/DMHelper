@@ -26,4 +26,12 @@ class CharInfo extends Model
      */
     public $timestamps = false;
 
+    /**
+     * The character that owns the character infos.
+     */
+    public function character()
+    {
+        return $this->belongsTo(Character::class);
+    }
+
 }
