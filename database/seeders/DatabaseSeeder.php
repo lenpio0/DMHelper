@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
 
         \App\Models\User::factory()->create([
             'name' => 'lenpio',
@@ -20,48 +19,28 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('deidera25'),
         ]);
 
-        \App\Models\User::factory()->create([
-            'name' => 'guigz',
-            'email' => 'guigz@gmail.com',
-            'password' => bcrypt('guigzguigz'),
-        ]);
-
-        $character1 = \App\Models\Character::create([
+        \App\Models\Character::create([
             'name' => 'Hugo Janna',
             'health' => 13,
             'user_id' => 1,
         ]);
 
-        $character2 = \App\Models\Character::create([
-            'name' => 'Strybim',
-            'health' => 16,
-            'user_id' => 2,
-        ]);
+        \App\Models\User::factory(5)->hasCharacters(2)->create()->each(function ($user) {
+            $user->characters->each(function ($character) {
+                $table = \App\Models\Table::factory(1)->create();
+                $character->tables()->attach($table);
+                $buffs = \App\Models\Buff::factory(2)->create();
+                $character->buffs()->attach($buffs);
+                $spells = \App\Models\Spell::factory(2)->create();
+                $character->spells()->attach($spells);
+            });
+        });
 
-        \App\Models\CharInfo::create([
-            'info' => 'Il existe',
-            'is_secret' => 1,
-            'character_id' => 1,
-        ]);
-
-        \App\Models\CharInfo::create([
-            'info' => 'Il est là',
-            'is_secret' => 0,
-            'character_id' => 2,
-        ]);
-        
-        \App\Models\Table::create([
-            'name' => '@table',
-            'info' => 1,
-        ]);
-
-        \App\Models\Table::create([
-            'name' => 'contes-table',
-            'info' => 1,
-        ]);
-
-        $character1->tables()->attach(2);
-        $character2->tables()->attach(1);
+        \App\Models\CharInfo::factory(12)->create();
+        \App\Models\CharNote::factory(12)->create();
+        \App\Models\GlobInfo::factory(12)->create();
+        \App\Models\DmInfo::factory(12)->create();
+        \App\Models\Item::factory(12)->create();
 
     }
 }

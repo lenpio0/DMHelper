@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CharInfo extends Model
+class Spell extends Model
 {
     use HasFactory;
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'info',
-        'is_secret',
+        'name',
+        'desc',
     ];
 
     /**
@@ -27,11 +27,10 @@ class CharInfo extends Model
     public $timestamps = false;
 
     /**
-     * The character that owns the info.
+     * The characters that knows the spell.
      */
-    public function character()
+    public function characters()
     {
-        return $this->belongsTo(Character::class);
+        return $this->belongsToMany(Character::class);
     }
-
 }

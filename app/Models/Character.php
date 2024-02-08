@@ -43,11 +43,43 @@ class Character extends Model
     }
 
     /**
+     * The character notes.
+     */
+    public function charNotes()
+    {
+        return $this->hasMany(CharInfo::class);
+    }
+
+    /**
      * The tables of the character.
      */
     public function tables()
     {
         return $this->belongsToMany(Table::class);
+    }
+
+    /**
+     * The buffs of the character.
+     */
+    public function buffs()
+    {
+        return $this->belongsToMany(Buff::class);
+    }
+
+    /**
+     * The spells of the character.
+     */
+    public function spells()
+    {
+        return $this->belongsToMany(Spell::class);
+    }
+
+    /**
+     * The items that belong to the character.
+     */
+    public function items()
+    {
+        return $this->hasMany(Item::class);
     }
 
 }

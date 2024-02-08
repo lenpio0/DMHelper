@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CharInfo extends Model
+class GlobInfo extends Model
 {
     use HasFactory;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,7 +16,6 @@ class CharInfo extends Model
      */
     protected $fillable = [
         'info',
-        'is_secret',
     ];
 
     /**
@@ -27,11 +26,10 @@ class CharInfo extends Model
     public $timestamps = false;
 
     /**
-     * The character that owns the info.
+     * The table of the info.
      */
-    public function character()
+    public function table()
     {
-        return $this->belongsTo(Character::class);
+        return $this->belongsTo(Table::class);
     }
-
 }

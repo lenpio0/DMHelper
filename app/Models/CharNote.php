@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CharInfo extends Model
+class CharNote extends Model
 {
     use HasFactory;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,7 +16,6 @@ class CharInfo extends Model
      */
     protected $fillable = [
         'info',
-        'is_secret',
     ];
 
     /**
@@ -27,11 +26,10 @@ class CharInfo extends Model
     public $timestamps = false;
 
     /**
-     * The character that owns the info.
+     * The character that owns the note.
      */
     public function character()
     {
         return $this->belongsTo(Character::class);
     }
-
 }

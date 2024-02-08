@@ -34,4 +34,20 @@ class Table extends Model
         return $this->belongsToMany(Character::class);
     }
 
+    /**
+     * The dm infos that belong to the table.
+     */
+    public function dmInfos()
+    {
+        return $this->hasMany(DmInfo::class);
+    }
+
+    /**
+     * The global infos that belong to the table.
+     */
+    public function globInfos()
+    {
+        return $this->hasMany(GlobInfo::class);
+    }
+
 }
