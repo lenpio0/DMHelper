@@ -35,11 +35,19 @@ class Character extends Model
     }
 
     /**
-     * The character infos that belong to the character.
+     * The character infos.
      */
     public function charInfos()
     {
         return $this->hasMany(CharInfo::class);
+    }
+
+    /**
+     * The tables of the character.
+     */
+    public function tables()
+    {
+        return $this->belongsToMany(Table::class);
     }
 
 }

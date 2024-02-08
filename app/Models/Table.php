@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CharInfo extends Model
+class Table extends Model
 {
     use HasFactory;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,13 +25,13 @@ class CharInfo extends Model
      * @var bool
      */
     public $timestamps = false;
-
+    
     /**
-     * The character that owns the infos.
+     * The characters that are on the table.
      */
-    public function character()
+    public function characters()
     {
-        return $this->belongsTo(Character::class);
+        return $this->belongsToMany(Character::class);
     }
 
 }

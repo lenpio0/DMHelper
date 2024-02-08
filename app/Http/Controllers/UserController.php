@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function show(string $id) 
     {
-        $user = User::with('characters.charInfos')->find($id)->only('id', 'name', 'email', 'is_dm', 'characters');
+        $user = User::with('characters.charInfos', 'characters.tables')->find($id)->only('id', 'name', 'email', 'is_dm', 'characters');
         
         return Inertia::render('UserShow', compact('user'));
     }
