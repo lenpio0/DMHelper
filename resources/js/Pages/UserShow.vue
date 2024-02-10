@@ -1,6 +1,6 @@
 <template>
     <div class="bg-gray-800 h-full">
-        <div :class="{ 'hidden' : brMenu }" class="fixed bg-gray-900 h-full">
+        <div v-show="brMenu" class="fixed bg-gray-900 h-full">
             <span>{{ user.name }}</span>
             <li v-for="character in user.characters">
                 <ul>{{  character.name }}</ul>
@@ -20,7 +20,7 @@
 
     export default {
         setup() {
-            const brMenu = ref(true);
+            const brMenu = ref(false);
 
             const toggleBrMenu = () => {
                 brMenu.value = !brMenu.value;
