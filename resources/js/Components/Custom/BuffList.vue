@@ -4,7 +4,7 @@
     <h2>Buffs</h2>
     <ul>
       <li v-for="buff in buffs">
-        {{ buff.name }} - {{ buff.description }}
+        {{ buff.name }} - {{ buff.desc }}
       </li>
     </ul>
   </div>

@@ -15,7 +15,7 @@ class CharNote extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'info',
+        'note',
     ];
 
     /**

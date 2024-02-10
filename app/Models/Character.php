@@ -47,7 +47,7 @@ class Character extends Model
      */
     public function charNotes()
     {
-        return $this->hasMany(CharInfo::class);
+        return $this->hasMany(CharNote::class);
     }
 
     /**

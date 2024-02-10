@@ -2,7 +2,12 @@
 <template>
     <div>
       <h1>{{ character.name }}</h1>
+      <item-list v-if="actualTab === 'items'" :items="character.items"></item-list>
+      <spell-list v-if="actualTab === 'items'" :spells="character.spells"></spell-list>
       <buff-list v-if="actualTab === 'charinfos'" :buffs="character.buffs"></buff-list>
+      <char-info-list v-if="actualTab === 'charinfos'" :char_infos="character.char_infos"></char-info-list>
+      <char-note-list v-if="actualTab === 'charinfos'" :char_notes="character.char_notes"></char-note-list>
+      <table-list v-if="actualTab === 'tables'" :tables="character.tables"></table-list>
       <button @click="toggleUserBrMenu" class="w-full">menu</button>
       <button @click="goToItems" class="w-full">Items Spells</button>
       <button @click="goToCharInfos" class="w-full">Char Info</button>
@@ -12,7 +17,12 @@
   
 <script>
     import { ref } from 'vue';
+    import ItemList from './ItemList.vue';
+    import SpellList from './SpellList.vue';
     import BuffList from './BuffList.vue';
+    import CharInfoList from './CharInfoList.vue';
+    import CharNoteList from './CharNoteList.vue';
+    import TableList from './TableList.vue';
 
     export default {
         setup() {
@@ -36,7 +46,12 @@
             };
         },
         components: {
-            BuffList 
+            ItemList,
+            SpellList,
+            BuffList,
+            CharInfoList,
+            CharNoteList,
+            TableList
         },
         props: {
             character: {
