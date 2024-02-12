@@ -18,7 +18,7 @@ class CharInfoFactory extends Factory
     public function definition(): array
     {
         return [
-            'info' => $this->faker->paragraph(2),
+            'info' => $this->faker->realText($maxNbChars = 50, $indexSize = 2),
             'is_secret' => $this->faker->boolean(),
             'character_id' => $this->faker->numberBetween(1,10),
         ];

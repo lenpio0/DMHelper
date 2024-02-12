@@ -17,8 +17,8 @@ class ItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
-            'desc' => $this->faker->paragraph(2),
+            'name' => $this->faker->name(),
+            'desc' => $this->faker->realText($maxNbChars = 100, $indexSize = 2),
             'character_id' => $this->faker->numberBetween(1,10),
         ];
     }

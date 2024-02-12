@@ -17,8 +17,8 @@ class BuffFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
-            'desc' => $this->faker->paragraph(2),
+            'name' => $this->faker->company(),
+            'desc' => $this->faker->realText($maxNbChars = 100, $indexSize = 2),
             'is_debuff' => $this->faker->boolean(),
         ];
     }

@@ -17,7 +17,7 @@ class CharNoteFactory extends Factory
     public function definition(): array
     {
         return [
-            'note' => $this->faker->paragraph(2),
+            'note' => $this->faker->realText($maxNbChars = 50, $indexSize = 2),
             'character_id' => $this->faker->numberBetween(1,10),
         ];
     }
