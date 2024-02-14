@@ -35,4 +35,5 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/user/{id}', [UserController::class, 'show']);
+Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+Route::post('/user/{id}', [CharNoteController::class,'store'])->name('char-note.store');

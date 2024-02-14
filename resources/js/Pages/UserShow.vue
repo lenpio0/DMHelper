@@ -15,36 +15,36 @@
 </template>
 
 <script>
-    import { ref } from 'vue';
-    import CharacterShow from '../Components/Custom/CharacterShow.vue';
+import { ref } from 'vue';
+import CharacterShow from '../Components/Custom/CharacterShow.vue';
 
-    export default {
-        setup() {
-            const brMenu = ref(false);
-            
-            const toggleBrMenu = () => {
-                brMenu.value = !brMenu.value;
-            };
+export default {
+    setup() {
+        const brMenu = ref(false);
 
-            const actualChar = ref(0);
+        const toggleBrMenu = () => {
+            brMenu.value = !brMenu.value;
+        };
 
-            const updateActualChar = (index) => {
-                actualChar.value = index;
-                brMenu.value = false;
-            }
-            
-            return {
-                brMenu,
-                toggleBrMenu,
-                actualChar,
-                updateActualChar
-            };
-        },
-        components: {
-            CharacterShow 
-        },
-        props: { 
-            user: Object,
-        },
-    }
+        const actualChar = ref(0);
+
+        const updateActualChar = (index) => {
+            actualChar.value = index;
+            brMenu.value = false;
+        }
+
+        return {
+            brMenu,
+            toggleBrMenu,
+            actualChar,
+            updateActualChar
+        };
+    },
+    components: {
+        CharacterShow
+    },
+    props: {
+        user: Object,
+    },
+}
 </script>
