@@ -12,10 +12,11 @@
 </template>
   
 <script>
+import { Inertia } from '@inertiajs/inertia';
 export default {
     props: {
         char_id: {
-            default: () => []
+            default: null
         },
         closeCharNoteAdd: Function,
     },
@@ -24,7 +25,9 @@ export default {
             this.closeCharNoteAdd();
         },
         addNote() {
-            this.note.post(route('char-note.store', char_id));
+            Inertia.post(route('add.store', this.char_id), {
+                note: this.note,
+            });        
         }
     },
     data() {

@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AddController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +37,4 @@ Route::middleware([
 });
 
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
-Route::post('/user/{id}', [CharNoteController::class,'store'])->name('char-note.store');
+Route::post('/add/{id}', [AddController::class,'store'])->name('add.store');

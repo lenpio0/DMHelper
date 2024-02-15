@@ -16,6 +16,7 @@ class CharNote extends Model
      */
     protected $fillable = [
         'note',
+        'character_id'
     ];
 
     /**
