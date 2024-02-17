@@ -27,7 +27,8 @@ export default {
         addNote() {
             Inertia.post(route('action.handle'), {
                 note: this.note,
-                char_id: this.char_id
+                char_id: this.char_id,
+                action: 'add-char-note'
             });        
         }
     },

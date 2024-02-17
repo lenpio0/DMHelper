@@ -4,7 +4,8 @@
         <h2>CharNotes</h2>
         <ul>
             <li v-for="char_note in char_notes">
-                {{ char_note.note }}
+                <span>{{ char_note.note }}</span>
+                <button @click="deleteCharNote(char_note.id)">x</button>
             </li>
             <li>
                 <button @click="openCharNoteAdd">Add note</button>
@@ -16,6 +17,7 @@
   
 <script>
 import { ref } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
 import CharNoteAdd from './CharNoteAdd.vue';
 export default {
     setup() {
@@ -46,5 +48,13 @@ export default {
             default: () => []
         }
     },
+    methods: {
+        deleteCharNote(note_id) {
+            Inertia.post(route('action.handle'), {
+                note_id: note_id,
+                action: 'del-char-note'
+            });        
+        }
+    }
 }
 </script>

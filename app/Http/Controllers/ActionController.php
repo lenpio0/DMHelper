@@ -14,15 +14,30 @@ class ActionController extends Controller
     public function handle(Request $request)
     {
         // dd($request);
-        $validated = Validator::make($request->only('note'), [
-            'note' => 'nullable',
-        ])->valid();
 
-        CharNote::create(['note' => $validated['note'], 'character_id' => $request->char_id]);
+        switch ($request->action) {
+            
+            case "add-char-note":
 
-        session()->flash('flash.banner', 'Contenu mis à jour');
-        session()->flash('flash.bannerStyle', 'success');
+                $validated = Validator::make($request->only('note'), [
+                    'note' => 'nullable',
+                ])->valid();
+        
+                CharNote::create(['note' => $validated['note'], 'character_id' => $request->char_id]);
+        
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'success');
+        
+                return redirect()->back();
 
-        return redirect()->back();
+                break;
+            case 'del-char-note':
+
+                $charNote = CharNote::findOrFail($request->note_id);
+                $charNote->delete();
+
+                break;
+
+        }
     }
 }
