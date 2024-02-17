@@ -4,7 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AddController;
+use App\Http\Controllers\ActionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +37,4 @@ Route::middleware([
 });
 
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
-Route::post('/add/{id}', [AddController::class,'store'])->name('add.store');
+Route::post('/actions', [ActionController::class,'handle'])->name('action.handle');
