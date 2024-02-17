@@ -22,15 +22,14 @@ class ActionController extends Controller
                 $validated = Validator::make($request->only('note'), [
                     'note' => 'nullable',
                 ])->valid();
-        
+
                 CharNote::create(['note' => $validated['note'], 'character_id' => $request->char_id]);
-        
+
                 session()->flash('flash.banner', 'Contenu mis à jour');
                 session()->flash('flash.bannerStyle', 'success');
-        
-                return redirect()->back();
 
                 break;
+
             case 'del-char-note':
 
                 $charNote = CharNote::findOrFail($request->note_id);
@@ -38,6 +37,16 @@ class ActionController extends Controller
 
                 break;
 
+            case 'edit-char-note':
+
+                $validated = Validator::make($request->only('note'), [
+                    'note' => 'nullable',
+                ])->valid();
+
+                $charNote = CharNote::findOrFail($request->note_id);
+                $charNote->update($validated);
+
+                break;
         }
     }
 }
