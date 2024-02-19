@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('buff_id');
             $table->foreignId('character_id');
+            $table->timestamps();
         });
     }
 

@@ -20,13 +20,6 @@ class CharNote extends Model
     ];
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * The character that owns the note.
      */
     public function character()

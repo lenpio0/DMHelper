@@ -16,6 +16,7 @@ return new class extends Migration
             $table->text('info');
             $table->boolean('is_secret');
             $table->foreignId('character_id');
+            $table->timestamps();
         });
     }
 

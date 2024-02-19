@@ -19,13 +19,6 @@ class GlobInfo extends Model
     ];
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * The table of the info.
      */
     public function table()

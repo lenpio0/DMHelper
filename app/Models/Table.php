@@ -18,14 +18,7 @@ class Table extends Model
         'info',
         'is_secret',
     ];
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-    
+ 
     /**
      * The characters that are on the table.
      */

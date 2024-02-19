@@ -21,13 +21,6 @@ class Buff extends Model
     ];
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * The characters that takes the debuff.
      */
     public function characters()

@@ -20,13 +20,6 @@ class Spell extends Model
     ];
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * The characters that knows the spell.
      */
     public function characters()

@@ -37,4 +37,5 @@ Route::middleware([
 });
 
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+Route::get('/check/{id}', [UserController::class, 'check'])->name('user.check');
 Route::post('/actions', [ActionController::class,'handle'])->name('action.handle');

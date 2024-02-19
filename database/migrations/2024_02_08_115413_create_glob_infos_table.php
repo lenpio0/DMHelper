@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('info');
             $table->foreignId('table_id');
+            $table->timestamps();
         });
     }
 

@@ -20,13 +20,6 @@ class Character extends Model
     ];
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * The user that owns the character.
      */
     public function user()
