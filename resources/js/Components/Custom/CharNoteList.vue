@@ -14,7 +14,7 @@
         </ul>
     </div>
     <char-note-add v-if="charNoteAdd === true" :char_id="char_id" :close-char-note-add="closeCharNoteAdd"></char-note-add>
-    <char-note-edit v-if="charNoteEdit === true" :char_note="selectedCharNote" :close-char-note-Edit="closeCharNoteEdit"></char-note-edit>
+    <char-note-edit v-if="charNoteEdit === true" :char_note="selectedCharNote" :close-char-note-edit="closeCharNoteEdit"></char-note-edit>
 
 </template>
   

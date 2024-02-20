@@ -17,6 +17,7 @@ class CharInfo extends Model
     protected $fillable = [
         'info',
         'is_secret',
+        'character_id',
     ];
 
     /**
