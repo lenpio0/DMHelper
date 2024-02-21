@@ -4,6 +4,10 @@
         <div>
             <form @submit.prevent="addInfo">
                 <textarea v-model="info" placeholder="Enter your info..."></textarea>
+                <div>
+                    <input type="checkbox" v-model="is_secret" name="secret">
+                    <label for="secret"> Is secret ?</label>
+                </div>
                 <button type="submit" class="">Add</button>
             </form>
             <button @click="closeInfoAdd">Close</button>
@@ -27,6 +31,7 @@ export default {
         addInfo() {
             Inertia.post(route('action.handle'), {
                 info: this.info,
+                is_secret: this.is_secret,
                 char_id: this.char_id,
                 action: 'add-char-info'
             });        
@@ -34,7 +39,8 @@ export default {
     },
     data() {
         return {
-            info: ''
+            info: '',
+            is_secret: false
         }
     }
 }

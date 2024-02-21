@@ -50,11 +50,11 @@ class ActionController extends Controller
                 break;
 
             case "add-char-info":
-                $validated = Validator::make($request->only('info'), [
+                $validated = Validator::make($request->only(['info', 'is_secret']), [
                     'info' => 'nullable',
                 ])->valid();
 
-                CharInfo::create(['info' => $validated['info'], 'character_id' => $request->char_id,'is_secret' => 0]);
+                CharInfo::create(['info' => $validated['info'], 'character_id' => $request->char_id,'is_secret' => $validated['is_secret']]);
 
                 session()->flash('flash.banner', 'Contenu mis à jour');
                 session()->flash('flash.bannerStyle', 'success');
