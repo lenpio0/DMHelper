@@ -34,7 +34,7 @@ export default {
                 is_secret: this.is_secret,
                 char_id: this.char_id,
                 action: 'add-char-info'
-            });        
+            });
         }
     },
     data() {

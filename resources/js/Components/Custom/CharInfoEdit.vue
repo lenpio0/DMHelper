@@ -29,7 +29,7 @@ export default {
                 info_id: this.char_info.id,
                 info: this.info,
                 action: 'edit-char-info'
-            });        
+            });
         }
     },
     data() {

@@ -4,7 +4,7 @@
         <h1>{{ character.name }}</h1>
         <item-list v-if="actualTab === 'items'" :items="character.items"></item-list>
         <spell-list v-if="actualTab === 'items'" :spells="character.spells"></spell-list>
-        <buff-list v-if="actualTab === 'charinfos'" :buffs="character.buffs"></buff-list>
+        <buff-list v-if="actualTab === 'charinfos'" :buffs="character.buffs" :char_id="character.id"></buff-list>
         <char-info-list v-if="actualTab === 'charinfos'" :char_infos="character.char_infos" :char_id="character.id"></char-info-list>
         <char-note-list v-if="actualTab === 'charinfos'" :char_notes="character.char_notes" :char_id="character.id"></char-note-list>
         <table-list v-if="actualTab === 'tables'" :tables="character.tables"></table-list>
