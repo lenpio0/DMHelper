@@ -7,6 +7,8 @@ use App\Models\Character;
 use App\Models\CharNote;
 use App\Models\CharInfo;
 use App\Models\Buff;
+use App\Models\Item;
+use App\Models\Spell;
 use Illuminate\Support\Facades\Validator;
 
 class ActionController extends Controller
@@ -126,6 +128,82 @@ class ActionController extends Controller
                 $buff->update($validated);
 
                 break;
+            
+            case "add-item":
+
+                $validated = Validator::make($request->only(['name', 'desc']), [
+                    'name' => 'nullable',
+                    'desc' => 'nullable',
+                ])->valid();
+
+                Item::create([
+                    'name' => $validated['name'],
+                    'desc' => $validated['desc'],
+                    'character_id' => $request->char_id,
+                ]);
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'success');
+
+                break;
+
+            case 'del-item':
+
+                $item = Item::findOrFail($request->item_id);
+                $item->delete();
+
+                break;
+
+            case 'edit-item':
+
+                $validated = Validator::make($request->only(['name', 'desc']), [
+                    'name' => 'nullable',
+                    'desc' => 'nullable',
+                ])->valid();
+
+                $item = Item::findOrFail($request->item_id);
+                $item->update($validated);
+
+                break;
+
+                case "add-spell":
+
+                    $validated = Validator::make($request->only(['name', 'desc']), [
+                        'name' => 'nullable',
+                        'desc' => 'nullable',
+                    ])->valid();
+    
+                    $spell = Spell::create([
+                        'name' => $validated['name'],
+                        'desc' => $validated['desc'],
+                    ]);
+
+                    $character = Character::findOrFail($request->char_id);
+                    $character->Spells()->attach($spell);
+    
+                    session()->flash('flash.banner', 'Contenu mis à jour');
+                    session()->flash('flash.bannerStyle', 'success');
+    
+                    break;
+    
+                case 'del-spell':
+    
+                    $spell = Spell::findOrFail($request->spell_id);
+                    $spell->delete();
+    
+                    break;
+    
+                case 'edit-spell':
+    
+                    $validated = Validator::make($request->only(['name', 'desc']), [
+                        'name' => 'nullable',
+                        'desc' => 'nullable',
+                    ])->valid();
+    
+                    $spell = Spell::findOrFail($request->spell_id);
+                    $spell->update($validated);
+    
+                    break;
         }
     }
 }
