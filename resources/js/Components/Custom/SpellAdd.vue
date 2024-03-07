@@ -1,6 +1,6 @@
 <!-- SpellAdd.vue -->
 <template>
-    <div class="fixed top-0 bottom-0 left-0 right-0 m-auto flex spells-center justify-center bg-black/50">
+    <div class="fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
         <div>
             <form @submit.prevent="addSpell">
                 <input type="text" v-model="name" placeholder="Enter name...">
