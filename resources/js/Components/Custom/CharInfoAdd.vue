@@ -3,7 +3,7 @@
     <div class="fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
         <div>
             <form @submit.prevent="addInfo">
-                <textarea v-model="info" placeholder="Enter your info..."></textarea>
+                <textarea v-model="info" placeholder="Enter your info..." required></textarea>
                 <div>
                     <input type="checkbox" v-model="is_secret" name="secret">
                     <label for="secret"> Is secret ?</label>

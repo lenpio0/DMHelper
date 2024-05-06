@@ -3,7 +3,7 @@
     <div class="fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
         <div>
             <form @submit.prevent="addNote">
-                <textarea v-model="note" placeholder="Enter your note..."></textarea>
+                <textarea v-model="note" placeholder="Enter your note..." required></textarea>
                 <button type="submit" class="">Add</button>
             </form>
             <button @click="closeNoteAdd">Close</button>

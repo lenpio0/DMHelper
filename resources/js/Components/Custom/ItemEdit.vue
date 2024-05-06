@@ -3,8 +3,8 @@
     <div class="fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
         <div>
             <form @submit.prevent="editItem">
-                <input type="text" v-model="name" :placeholder=item.name>
-                <textarea v-model="desc" :placeholder=item.desc></textarea>
+                <input type="text" v-model="name" :placeholder=item.name required>
+                <textarea v-model="desc" :placeholder=item.desc required></textarea>
                 <button type="submit" class="">Edit</button>
             </form>
             <button @click="closeItemEdit">Close</button>

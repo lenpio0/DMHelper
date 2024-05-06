@@ -3,8 +3,8 @@
     <div class="fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
         <div>
             <form @submit.prevent="editSpell">
-                <input type="text" v-model="name" :placeholder=spell.name>
-                <textarea v-model="desc" :placeholder=spell.desc></textarea>
+                <input type="text" v-model="name" :placeholder=spell.name required>
+                <textarea v-model="desc" :placeholder=spell.desc required></textarea>
                 <button type="submit" class="">Edit</button>
             </form>
             <button @click="closeSpellEdit">Close</button>
