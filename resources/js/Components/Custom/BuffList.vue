@@ -1,16 +1,16 @@
 <!-- BuffList.vue -->
 <template>
-	<div>
-		<h2>Buffs</h2>
+	<div class="p-8">
+		<h2 class='bg-slate-500 w-36 m-auto'>Buffs</h2>
 		<ul>
-			<li v-for="buff in buffs">
-				<span>{{ buff.name }}</span>
-				<span>{{ buff.desc }}</span>
-				<span>{{ buff.is_debuff }}</span>
-				<button @click="openBuffEdit(buff)"> edit </button>
-				<button @click="deleteBuff(buff.id)"> x </button>
+			<li v-for="(buff, index) in buffs" :key="buff.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
+				<span class="block text-xl">{{ buff.name }}</span>
+				<span class="block">{{ buff.desc }}</span>
+				<span class="block underline mb-2">{{ buff.is_debuff ? "Debuff" : "Buff" }}</span>
+				<button @click="openBuffEdit(buff)" class="border"> edit </button>
+				<button @click="deleteBuff(buff.id)" class="border border-red-600 mx-2"> x </button>
 			</li>
-			<li>
+			<li class="bg-slate-600">
 				<button @click="openBuffAdd">Add buff</button>
 			</li>
 		</ul>

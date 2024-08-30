@@ -1,12 +1,14 @@
 <!-- CharNoteEdit.vue -->
 <template>
-    <div class="fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
+    <div class="z-20 fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
         <div>
-            <form @submit.prevent="editNote">
-                <textarea v-model="note" :placeholder=char_note.note required></textarea>
-                <button type="submit" class="">Edit</button>
+            <form @submit.prevent="editNote" class="bg-blue-400 flex flex-col p-2">
+                <textarea v-model="note" :placeholder=char_note.note required class="m-2"></textarea>
+                <div class="flex justify-between">
+                    <button @click="closeNoteEdit" class="bg-red-400">Close</button>
+                    <button type="submit" class="bg-blue-200">Edit</button>
+                </div>
             </form>
-            <button @click="closeNoteEdit">Close</button>
         </div>
     </div>
 </template>

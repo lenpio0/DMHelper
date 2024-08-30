@@ -1,15 +1,15 @@
 <!-- SpellList.vue -->
 <template>
-	<div>
-		<h2>Spells</h2>
+	<div class="p-8">
+		<h2 class='bg-slate-500 w-36 m-auto'>Spells</h2>
 		<ul>
-			<li v-for="spell in spells">
-				<span>{{ spell.name }}</span>
-				<span>{{ spell.desc }}</span>
-				<button @click="openSpellEdit(spell)"> edit </button>
-				<button @click="deleteSpell(spell.id)"> x </button>
+			<li v-for="(spell, index) in spells" :key="spell.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
+				<span class="block text-xl">{{ spell.name }}</span>
+				<span class="block">{{ spell.desc }}</span>
+				<button @click="openSpellEdit(spell)" class="border"> edit </button>
+				<button @click="deleteSpell(spell.id)" class="border border-red-600 mx-2"> x </button>
 			</li>
-			<li>
+			<li class="bg-slate-600">
 				<button @click="openSpellAdd">Add spell</button>
 			</li>
 		</ul>

@@ -1,14 +1,14 @@
 <!-- CharNoteList.vue -->
 <template>
-    <div>
-        <h2>CharNotes</h2>
+    <div class="p-8">
+        <h2 class='bg-slate-500 w-36 m-auto'>CharNotes</h2>
         <ul>
-            <li v-for="char_note in char_notes">
-                <span>{{ char_note.note }}</span>
-                <button @click="openCharNoteEdit(char_note)"> edit </button>
-                <button @click="deleteCharNote(char_note.id)"> x </button>
+            <li v-for="(char_note, index) in char_notes" :key="char_note.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
+                <span class="block mb-2">{{ char_note.note }}</span>
+                <button @click="openCharNoteEdit(char_note)" class="border"> edit </button>
+                <button @click="deleteCharNote(char_note.id)" class="border border-red-600 mx-2"> x </button>
             </li>
-            <li>
+            <li class="bg-slate-600">
                 <button @click="openCharNoteAdd">Add note</button>
             </li>
         </ul>
