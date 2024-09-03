@@ -9,6 +9,7 @@ use App\Models\CharInfo;
 use App\Models\Buff;
 use App\Models\Item;
 use App\Models\Spell;
+use App\Models\Table;
 use Illuminate\Support\Facades\Validator;
 
 class ActionController extends Controller
@@ -202,6 +203,27 @@ class ActionController extends Controller
     
                     $spell = Spell::findOrFail($request->spell_id);
                     $spell->update($validated);
+    
+                    break;
+
+                case "add-table":
+                    $validated = Validator::make($request->only(['name', 'char_ids']), [
+                        'name' => 'nullable',
+                        'char_ids' => 'array',
+                        'char_ids.*' => 'exists:characters,id', // Ensure character IDs are valid                    
+                    ])->valid();
+
+                    $table = Table::create([
+                        'name' => $validated['name'], 
+                    ]);
+
+                    // Attach characters to the table
+                    if (isset($validated['char_ids']) && !empty($validated['char_ids'])) {
+                        $table->characters()->sync($validated['char_ids']);
+                    }
+    
+                    session()->flash('flash.banner', 'Contenu mis à jour');
+                    session()->flash('flash.bannerStyle', 'success');
     
                     break;
         }

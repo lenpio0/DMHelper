@@ -15,8 +15,7 @@ class Table extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'info',
-        'is_secret',
+        'name',
     ];
  
     /**
