@@ -16,6 +16,7 @@ class GlobInfo extends Model
      */
     protected $fillable = [
         'info',
+        'table_id'
     ];
 
     /**

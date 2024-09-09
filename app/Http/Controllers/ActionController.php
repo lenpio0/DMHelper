@@ -10,6 +10,8 @@ use App\Models\Buff;
 use App\Models\Item;
 use App\Models\Spell;
 use App\Models\Table;
+use App\Models\GlobInfo;
+use App\Models\DmInfo;
 use Illuminate\Support\Facades\Validator;
 
 class ActionController extends Controller
@@ -226,6 +228,106 @@ class ActionController extends Controller
                     session()->flash('flash.bannerStyle', 'success');
     
                     break;
+
+                case 'edit-table':
+    
+                    $validated = Validator::make($request->only(['name', 'char_ids']), [
+                        'name' => 'nullable',
+                        'char_ids' => 'array',
+                        'char_ids.*' => 'exists:characters,id', // Ensure character IDs are valid                    
+                    ])->valid();
+        
+                    $table = Table::findOrFail($request->table_id);
+                    $table->update($validated);
+                    
+                    // Sync the character relations (this will remove unselected and add new ones)
+                    if (isset($validated['char_ids'])) {
+                        $table->characters()->sync($validated['char_ids']);
+                    }
+
+                    session()->flash('flash.banner', 'Contenu mis à jour');
+                    session()->flash('flash.bannerStyle', 'success');
+        
+                    break;
+
+                case 'del-table':
+
+                    $table = Table::findOrFail($request->table_id);
+                    $table->dmInfos()->delete();
+                    $table->globInfos()->delete();
+                    $table->delete();
+
+                    session()->flash('flash.banner', 'Contenu mis à jour');
+                    session()->flash('flash.bannerStyle', 'success');
+    
+                    break;
+
+                case "add-glob-info":
+                    $validated = Validator::make($request->only(['info']), [
+                        'info' => 'nullable',
+                    ])->valid();
+         
+                    GlobInfo::create([
+                        'info' => $validated['info'], 
+                        'table_id' => $request->table_id,
+                    ]);
+
+                    session()->flash('flash.banner', 'Contenu mis à jour');
+                    session()->flash('flash.bannerStyle', 'success');
+        
+                    break;
+        
+                case 'del-glob-info':
+        
+                    $globInfo = GlobInfo::findOrFail($request->info_id);
+                    $globInfo->delete();
+        
+                    break;
+        
+                case 'edit-glob-info':
+        
+                    $validated = Validator::make($request->only('info'), [
+                        'info' => 'nullable',
+                    ])->valid();
+        
+                    $globInfo = GlobInfo::findOrFail($request->info_id);
+                    $globInfo->update($validated);
+        
+                    break;
+
+                case 'del-dm-info':
+        
+                    $dmInfo = DmInfo::findOrFail($request->info_id);
+                    $dmInfo->delete();
+            
+                    break;
+                    
+                case "add-dm-info":
+                    $validated = Validator::make($request->only(['info']), [
+                        'info' => 'nullable',
+                    ])->valid();
+             
+                    DmInfo::create([
+                        'info' => $validated['info'], 
+                        'table_id' => $request->table_id,
+                    ]);
+    
+                    session()->flash('flash.banner', 'Contenu mis à jour');
+                    session()->flash('flash.bannerStyle', 'success');
+            
+                    break;
+
+                case 'edit-dm-info':
+    
+                    $validated = Validator::make($request->only('info'), [
+                        'info' => 'nullable',
+                    ])->valid();
+        
+                    $dmInfo = DmInfo::findOrFail($request->info_id);
+                    $dmInfo->update($validated);
+        
+                    break;
+    
         }
     }
 }

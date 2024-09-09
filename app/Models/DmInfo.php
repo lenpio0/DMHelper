@@ -16,6 +16,7 @@ class DmInfo extends Model
      */
     protected $fillable = [
         'info',
+        'table_id'
     ];
 
     /**
