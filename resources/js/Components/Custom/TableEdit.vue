@@ -3,7 +3,7 @@
     <div class="z-20 fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
         <div>
             <form @submit.prevent="editTable" class="bg-blue-400 flex flex-col p-2">
-                <input v-model="name" :placeholder=table.name required class="m-2"></input>
+                <input v-model="name" required class="m-2"></input>
   <!-- Iterate over the selectedCharacters array to render multiple selects -->
   <div v-for="(selectedCharacter, index) in selectedCharacters" :key="index" class="mb-2">
                     <select v-model="selectedCharacters[index]" @change="handleCharacterChange(index)">
@@ -36,7 +36,7 @@ export default {
     },
     data() {
         return {
-            name: '',
+            name: this.table.name || '',
             selectedCharacters: [''], // Initialize with one empty selection
             characters: [],  // Initialize characters array
         };

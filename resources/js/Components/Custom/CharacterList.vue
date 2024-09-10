@@ -5,7 +5,9 @@
         <ul>
             <li v-for="(character, index) in characters" :key="character.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
                 <span class="block">{{ character.name }}</span>
-                <span class="block underline mb-2">{{ character.id }}</span>
+                <span class="block underline mb-2">{{ character.max_health }} Max HP</span>
+                <span class="block underline mb-2">{{ character.act_health }} HP</span>
+                <span class="block underline mb-2" v-if="users[character.user_id]">{{ users[character.user_id].name }}</span>
                 <button @click="openCharacterEdit(character)" class="border"> edit </button>
                 <button @click="deleteCharacter(character.id)" class="border border-red-600 mx-2"> x </button>
             </li>
@@ -77,15 +79,26 @@ export default {
             .catch(error => {
                 console.error('Error fetching characters:', error);
             });
+        },
+        fetchUsers() {
+            axios.get('/api/users') 
+                .then(response => {
+                    this.users = response.data;  // Assuming response contains the list of users
+                })
+                .catch(error => {
+                    console.error('Error fetching users:', error);
+                });
         }
     },
     data() {
         return {
             characters: [],  // Initialize characters array
+            users: [],
         };
     },
     mounted() {
         this.fetchCharacters();  // Fetch characters when component is mounted
+        this.fetchUsers();  // Fetch characters when component is mounted 
     },  
 }
 </script>

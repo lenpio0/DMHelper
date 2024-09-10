@@ -3,7 +3,7 @@
     <div class="z-20 fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
         <div>
             <form @submit.prevent="editInfo" class="bg-blue-400 flex flex-col p-2">
-                <textarea v-model="info" :placeholder=glob_info.info required class="m-2"></textarea>
+                <textarea v-model="info" required class="m-2"></textarea>
                 <div class="flex justify-between">
                     <button @click="closeInfoEdit" class="bg-red-400">Close</button>
                     <button type="submit" class="bg-blue-200">Edit</button>
@@ -36,7 +36,7 @@ export default {
     },
     data() {
         return {
-            info: '',
+            info: this.glob_info.info || '',
         }
     }
 }

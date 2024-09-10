@@ -3,7 +3,7 @@
     <div class="z-20 fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
         <div>
             <form @submit.prevent="editInfo" class="bg-blue-400 flex flex-col p-2">
-                <textarea v-model="info" :placeholder=char_info.info required class="m-2"></textarea>
+                <textarea v-model="info" required class="m-2"></textarea>
                 <div>
                     <input type="checkbox" v-model="is_secret" :checked="is_secret">
                     <label>Is secret ?</label>
@@ -41,8 +41,8 @@ export default {
     },
     data() {
         return {
-            info: '',
-            is_secret: false,
+            info: this.char_info.info || '',
+            is_secret: this.char_info.is_secret || false,
         }
     }
 }
