@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('characters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('health');
+            $table->integer('max_health');
+            $table->integer('act_health');
             $table->foreignId('user_id');
             $table->timestamps();
         });

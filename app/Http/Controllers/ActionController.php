@@ -12,6 +12,7 @@ use App\Models\Spell;
 use App\Models\Table;
 use App\Models\GlobInfo;
 use App\Models\DmInfo;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class ActionController extends Controller
@@ -328,6 +329,44 @@ class ActionController extends Controller
         
                     break;
     
+                case "add-character":
+                    
+                    $validated = Validator::make($request->only(['name', 'max_health', 'act_health', 'user_id']), [
+                        'name' => 'nullable',
+                        'max_health' => 'nullable',
+                        'act_health' => 'nullable',
+                        'user_id' => 'required|exists:users,id'
+                    ])->valid();
+             
+                    Character::create([
+                        'name' => $validated['name'], 
+                        'max_health' => $validated['max_health'],
+                        'act_health' => $validated['act_health'],
+                        'user_id' => $validated['user_id']
+                    ]);
+
+                    break;
+
+                case 'edit-character':
+
+                    $validated = Validator::make($request->only('name', 'max_health', 'act_health', 'user_id'), [
+                        'name' => 'nullable',
+                        'max_health' => 'nullable',
+                        'act_health' => 'nullable',
+                        'user_id' => 'required|exists:users,id'
+                    ])->valid();
+        
+                    $character = Character::findOrFail($request->char_id);
+                    $character->update($validated);
+        
+                    break;
+
+                case 'del-character':
+    
+                    $char = Character::findOrFail($request->char_id);
+                    $char->delete();
+            
+                    break;
         }
     }
 }

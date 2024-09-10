@@ -11,7 +11,7 @@ class CharacterController extends Controller
     /**
      * bla bla bla
      */
-    public function index()
+    public function fetchAll()
     {
         $characters = Character::all();
         return response()->json($characters);

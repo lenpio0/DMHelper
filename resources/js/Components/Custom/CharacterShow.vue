@@ -8,11 +8,13 @@
         <char-info-list v-if="actualTab === 'charinfos'" :char_infos="character.char_infos" :char_id="character.id"></char-info-list>
         <char-note-list v-if="actualTab === 'charinfos'" :char_notes="character.char_notes" :char_id="character.id"></char-note-list>
         <table-list v-if="actualTab === 'tables'" :tables="character.tables"></table-list>
+        <character-list v-if="actualTab === 'chars'"></character-list>
         <div class="fixed bottom-12 z-10 w-80 flex left-1/2 transform -translate-x-1/2 bg-slate-400">
             <button @click="toggleUserBrMenu" class="w-full border">menu</button>
             <button @click="goToItems" class="w-full border">Items Spells</button>
             <button @click="goToCharInfos" class="w-full border">Char Info</button>
             <button @click="goToTables" class="w-full border">Tables</button>
+            <button @click="goToChars" class="w-full border">Characters</button>
         </div>
     </div>
 </template>
@@ -25,6 +27,7 @@ import BuffList from './BuffList.vue';
 import CharInfoList from './CharInfoList.vue';
 import CharNoteList from './CharNoteList.vue';
 import TableList from './TableList.vue';
+import CharacterList from './CharacterList.vue';
 
 export default {
     setup() {
@@ -39,12 +42,16 @@ export default {
         const goToTables = () => {
             actualTab.value = 'tables';
         };
+        const goToChars = () => {
+            actualTab.value = 'chars';
+        };
 
         return {
             actualTab,
             goToItems,
             goToCharInfos,
-            goToTables
+            goToTables,
+            goToChars
         };
     },
     components: {
@@ -53,7 +60,8 @@ export default {
         BuffList,
         CharInfoList,
         CharNoteList,
-        TableList
+        TableList,
+        CharacterList
     },
     props: {
         character: {

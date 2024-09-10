@@ -16,9 +16,11 @@ class CharacterFactory extends Factory
      */
     public function definition(): array
     {
+        $health = $this->faker->numberBetween(1, 12);
         return [
             'name' => $this->faker->name(),
-            'health' => $this->faker->numberBetween(1, 12),
+            'max_health' => $health,
+            'act_health' => $health
         ];
     }
 }

@@ -35,4 +35,9 @@ class UserController extends Controller
             ]);
         }
     }
+    public function fetchAll()
+    {
+        $users = User::all();
+        return response()->json($users);
+    }
 }

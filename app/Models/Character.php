@@ -16,7 +16,9 @@ class Character extends Model
      */
     protected $fillable = [
         'name',
-        'health',
+        'max_health',
+        'act_health',
+        'user_id',
     ];
 
     /**

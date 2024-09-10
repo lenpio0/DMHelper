@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Character::create([
             'name' => 'Hugo Janna',
-            'health' => 13,
+            'max_health' => 13,
+            'act_health' => 13,
             'user_id' => 1,
         ]);
 

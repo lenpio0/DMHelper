@@ -15,8 +15,7 @@
         </ul>
     </div>
     <char-info-add v-if="charInfoAdd === true" :char_id="char_id" :close-char-info-add="closeCharInfoAdd"></char-info-add>
-    <char-info-edit v-if="charInfoEdit === true" :char_info="selectedCharInfo"
-        :close-char-info-edit="closeCharInfoEdit"></char-info-edit>
+    <char-info-edit v-if="charInfoEdit === true" :char_info="selectedCharInfo" :close-char-info-edit="closeCharInfoEdit"></char-info-edit>
 </template>
 
 <script>
