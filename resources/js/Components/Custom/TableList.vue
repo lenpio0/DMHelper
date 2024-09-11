@@ -40,7 +40,15 @@
                 <button v-if="authRole !== 'player'" @click="openTableAdd">Add table</button>
             </li>
             <li class="bg-slate-700">
-                <button v-if="authRole !== 'admin'" @click="openTableJoin">Join table</button>
+                <form @submit.prevent="joinTable"  v-if="authRole === 'player'">
+                    <span>Join a table :</span>
+                    <select v-model="table_id">
+                        <option v-for="table in allTables" :key="table.id" :value="table.id">
+                            {{ table.name }}
+                        </option>
+                    </select>
+                    <button @click="openTableJoin">Join table</button>
+                </form>
             </li>
         </ul>
     </div>
@@ -178,6 +186,12 @@ export default {
             default: () => []
         },
     },
+    data() {
+        return {
+            allTables: [],
+            table_id: '',
+        }
+    },
     methods: {
         deleteTable(table_id) {
             Inertia.post(route('action.handle'), {
@@ -196,8 +210,28 @@ export default {
                 info_id: info_id,
                 action: 'del-dm-info'
             });
-        }
-    }
+        },
+        joinTable() {
+            Inertia.post(route('action.handle'), {
+                table_id: this.table_id,
+                char_id: this.char_id,
+                action: 'join-table'
+            });
+        },
+        fetchTables() {
+            axios.get('/api/tables') 
+                .then(response => {
+                    this.allTables = response.data;  // Assuming response contains the list of users
+                })
+                .catch(error => {
+                    console.error('Error fetching tables:', error);
+                });
+        },
+
+    },
+    mounted() {
+        this.fetchTables();  // Fetch when component is mounted
+    },  
 }
 </script>
 

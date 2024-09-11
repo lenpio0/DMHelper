@@ -6,18 +6,19 @@
             <li v-for="(character, index) in upUser.characters">
                 <ul class="bg-slate-300 w-40 block mx-auto my-4"><button @click="updateActualChar(index)">{{ character.name }}</button></ul>
             </li>
+            <button @click="openCharacterAdd" v-if="authUser.role === 'player'">Add Character</button>
             <div class="bg-slate-300 w-40 block mx-auto my-4">settings</div>
             <button class="bg-slate-300 w-40 block mx-auto my-4" @click="logout">disconnect</button>
         </div>
         <character-show :character="upUser.characters[actualChar]" :toggle-br-menu="toggleBrMenu" :auth-role="authUser.role"></character-show>
-
-        <!-- <p>DUMP : {{ user }}</p> -->
+        <character-add v-if="characterAdd === true && authUser.role === 'player'" :auth-role="authUser.role" :auth-id="authUser.id" :close-character-add="closeCharacterAdd"></character-add>
     </div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue';
 import CharacterShow from '../Components/Custom/CharacterShow.vue';
+import CharacterAdd from '../Components/Custom/CharacterAdd.vue';
 import axios from 'axios';
 import { Inertia } from '@inertiajs/inertia';
 
@@ -36,6 +37,14 @@ export default {
             brMenu.value = false;
         }
 
+        const characterAdd = ref(false);
+
+        const openCharacterAdd = () => {
+            characterAdd.value = true;
+        }
+        const closeCharacterAdd = () => {
+            characterAdd.value = false;
+        }
 
         const checkUpdate = () => {
             axios.get('/check/' + upUser.id)
@@ -58,12 +67,17 @@ export default {
             actualChar,
             upUser,
             toggleBrMenu,
-            updateActualChar
+            updateActualChar,
+            characterAdd,
+            openCharacterAdd,
+            closeCharacterAdd,
+
         };
     },
     
     components: {
-        CharacterShow
+        CharacterShow,
+        CharacterAdd,
     },
     props: {
         user: Object,

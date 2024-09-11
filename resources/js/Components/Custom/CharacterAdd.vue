@@ -1,10 +1,10 @@
 <!-- CharacterAdd.vue -->
 <template>
     <div class="z-20 fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
-        <div> {{ users }}
+        <div>
             <form @submit.prevent="addCharacter" class="bg-blue-400 flex flex-col p-2">
-                <select v-model="user_id">
-                    <option value="" disabled></option>
+                <select v-model="user_id" v-if="authRole !== 'player'">
+                    <option value="" disabled>Choose user...</option>
                     <option v-for="user in users" :key="user.id" :value="user.id">
                         {{ user.name }}
                     </option>
@@ -25,12 +25,19 @@ import { Inertia } from '@inertiajs/inertia';
 export default {
     props: {
         closeCharacterAdd: Function,
+        authRole: {
+            default: () => []
+        },
+        authId: {
+            default: () => []
+        },
     },
     methods: {
         closeCharacterAdd() {
             this.closeCharacterAdd();
         },
         addCharacter() {
+            if (this.authRole === 'player') { this.user_id = this.authId };
             Inertia.post(route('action.handle'), {
                 name: this.name,
                 max_health: this.health,

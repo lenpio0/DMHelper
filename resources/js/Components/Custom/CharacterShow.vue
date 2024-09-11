@@ -7,7 +7,7 @@
         <buff-list v-if="actualTab === 'charinfos'" :auth-role="authRole" :buffs="character.buffs" :char_id="character.id"></buff-list>
         <char-info-list v-if="actualTab === 'charinfos'" :auth-role="authRole" :char_infos="character.char_infos" :char_id="character.id"></char-info-list>
         <char-note-list v-if="actualTab === 'charinfos'" :char_notes="character.char_notes" :char_id="character.id"></char-note-list>
-        <table-list v-if="actualTab === 'tables'" :auth-role="authRole" :tables="character.tables"></table-list>
+        <table-list v-if="actualTab === 'tables'" :auth-role="authRole" :tables="character.tables" :char_id="character.id"></table-list>
         <character-list v-if="actualTab === 'chars' && authRole !== 'player'"></character-list>
         <div class="fixed bottom-12 z-10 w-80 flex left-1/2 transform -translate-x-1/2 bg-slate-400">
             <button @click="toggleUserBrMenu" class="w-full border">menu</button>

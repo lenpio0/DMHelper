@@ -367,6 +367,14 @@ class ActionController extends Controller
                     $char->delete();
             
                     break;
+
+                case 'join-table':
+                    
+                    $char = Character::findOrFail($request->char_id);
+                    $table = Table::findOrFail($request->table_id);
+                    $table->Characters()->attach($char);
+            
+                    break;
         }
     }
 }

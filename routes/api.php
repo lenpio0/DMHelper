@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/characters', [CharacterController::class, 'fetchAll']);
 Route::get('/users', [UserController::class, 'fetchAll']);
+Route::get('/tables', [TableController::class, 'fetchAll']);
