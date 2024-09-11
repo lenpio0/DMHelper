@@ -6,16 +6,16 @@
             <li v-for="(char_info, index) in char_infos" :key="char_info.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
                 <span class="block">{{ char_info.info }}</span>
                 <span class="block underline mb-2">{{ char_info.is_secret ? "Secret" : "Not secret" }}</span>
-                <button @click="openCharInfoEdit(char_info)" class="border"> edit </button>
-                <button @click="deleteCharInfo(char_info.id)" class="border border-red-600 mx-2"> x </button>
+                <button v-if="authRole !== 'player'" @click="openCharInfoEdit(char_info)" class="border"> edit </button>
+                <button v-if="authRole !== 'player'" @click="deleteCharInfo(char_info.id)" class="border border-red-600 mx-2"> x </button>
             </li>
             <li class="bg-slate-600">
-                <button @click="openCharInfoAdd">Add info</button>
+                <button v-if="authRole !== 'player'" @click="openCharInfoAdd">Add info</button>
             </li>
         </ul>
     </div>
-    <char-info-add v-if="charInfoAdd === true" :char_id="char_id" :close-char-info-add="closeCharInfoAdd"></char-info-add>
-    <char-info-edit v-if="charInfoEdit === true" :char_info="selectedCharInfo" :close-char-info-edit="closeCharInfoEdit"></char-info-edit>
+    <char-info-add v-if="charInfoAdd === true && authRole !== 'player'" :char_id="char_id" :close-char-info-add="closeCharInfoAdd"></char-info-add>
+    <char-info-edit v-if="charInfoEdit === true && authRole !== 'player'" :char_info="selectedCharInfo" :close-char-info-edit="closeCharInfoEdit"></char-info-edit>
 </template>
 
 <script>
@@ -68,7 +68,11 @@ export default {
         },
         char_id: {
             default: () => []
-        }
+        },
+        authRole:{
+             default: () => []
+        },
+
     },
     methods: {
         deleteCharInfo(info_id) {

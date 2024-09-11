@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -15,7 +16,9 @@ class UserController extends Controller
     {
         $user = User::with('characters.buffs', 'characters.spells', 'characters.items', 'characters.charInfos', 'characters.charNotes', 'characters.tables', 'characters.tables.dmInfos', 'characters.tables.globInfos', 'characters.tables.characters')->find($id);
 
-        return Inertia::render('UserShow', compact('user'));
+        $authUser = Auth::user();
+
+        return Inertia::render('UserShow', compact('user', 'authUser'));
     }
 
     /**

@@ -1,14 +1,15 @@
 <template>
     <div class="bg-gray-800 h-full">
         <div v-show="brMenu" class="fixed bg-gray-900 h-full w-1/3 max-w-80">
-            <span class="bg-slate-300 w-40 block mx-auto my-4">{{ upUser.name }}</span>
+            <span class="bg-slate-300 w-40 block mx-auto my-4" v-if="authUser.role !== 'player'">Auth : {{ authUser.name }}</span>
+            <span class="bg-slate-300 w-40 block mx-auto my-4">Looking at : {{ upUser.name }}</span>
             <li v-for="(character, index) in upUser.characters">
                 <ul class="bg-slate-300 w-40 block mx-auto my-4"><button @click="updateActualChar(index)">{{ character.name }}</button></ul>
             </li>
             <div class="bg-slate-300 w-40 block mx-auto my-4">settings</div>
-            <span class="bg-slate-300 w-40 block mx-auto my-4">disconnect</span>
+            <button class="bg-slate-300 w-40 block mx-auto my-4" @click="logout">disconnect</button>
         </div>
-        <character-show :character="upUser.characters[actualChar]" :toggle-br-menu="toggleBrMenu"></character-show>
+        <character-show :character="upUser.characters[actualChar]" :toggle-br-menu="toggleBrMenu" :auth-role="authUser.role"></character-show>
 
         <!-- <p>DUMP : {{ user }}</p> -->
     </div>
@@ -18,6 +19,7 @@
 import { ref, onMounted } from 'vue';
 import CharacterShow from '../Components/Custom/CharacterShow.vue';
 import axios from 'axios';
+import { Inertia } from '@inertiajs/inertia';
 
 export default {
     setup(props) {
@@ -65,6 +67,16 @@ export default {
     },
     props: {
         user: Object,
+        authUser: Object,
     },
+    methods: {
+        logout() {
+          Inertia.post(route('logout'), {}, {
+            onFinish: () => {
+                return redirect('/')
+            }
+          });
+        }
+    }
 }
 </script>

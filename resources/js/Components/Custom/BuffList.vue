@@ -7,16 +7,16 @@
 				<span class="block text-xl">{{ buff.name }}</span>
 				<span class="block">{{ buff.desc }}</span>
 				<span class="block underline mb-2">{{ buff.is_debuff ? "Debuff" : "Buff" }}</span>
-				<button @click="openBuffEdit(buff)" class="border"> edit </button>
-				<button @click="deleteBuff(buff.id)" class="border border-red-600 mx-2"> x </button>
+				<button v-if="authRole !== 'player'" @click="openBuffEdit(buff)" class="border"> edit </button>
+				<button v-if="authRole !== 'player'" @click="deleteBuff(buff.id)" class="border border-red-600 mx-2"> x </button>
 			</li>
 			<li class="bg-slate-600">
-				<button @click="openBuffAdd">Add buff</button>
+				<button v-if="authRole !== 'player'" @click="openBuffAdd">Add buff</button>
 			</li>
 		</ul>
 	</div>
-	<buff-add v-if="buffAdd === true" :char_id="char_id" :close-buff-add="closeBuffAdd"></buff-add>
-	<buff-edit v-if="buffEdit === true" :buff="selectedBuff" :close-buff-edit="closeBuffEdit"></buff-edit>
+	<buff-add v-if="buffAdd === true && authRole !== 'player'" :char_id="char_id" :close-buff-add="closeBuffAdd"></buff-add>
+	<buff-edit v-if="buffEdit === true && authRole !== 'player'" :buff="selectedBuff" :close-buff-edit="closeBuffEdit"></buff-edit>
 </template>
 
 <script>
@@ -69,7 +69,11 @@ export default {
 		},
 		char_id: {
 			default: () => []
-		}
+		},
+		authRole:{
+             default: () => []
+        },
+
 	},
 	methods: {
 		deleteBuff(buff_id) {

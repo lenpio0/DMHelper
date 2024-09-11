@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActionController;
@@ -35,6 +36,14 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+Route::post('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    
+    return redirect('/');
+})->name('logout');
 
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 Route::get('/check/{id}', [UserController::class, 'check'])->name('user.check');

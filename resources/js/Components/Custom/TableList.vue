@@ -15,40 +15,43 @@
                 <ul>
                     <li v-for="glob_info in table.glob_infos">
                         <span>{{ glob_info.info }}</span>
-                        <button @click="openGlobInfoEdit(glob_info)" class="border"> edit </button>
-                        <button @click="deleteGlobInfo(glob_info.id)" class="border border-red-600 mx-2 mt-2"> x </button>
+                        <button v-if="authRole !== 'player'" @click="openGlobInfoEdit(glob_info)" class="border"> edit </button>
+                        <button v-if="authRole !== 'player'" @click="deleteGlobInfo(glob_info.id)" class="border border-red-600 mx-2 mt-2"> x </button>
                     </li>
                     <li class="bg-slate-600">
-                        <button @click="openGlobInfoAdd(table)">Add Global info</button>
+                        <button v-if="authRole !== 'player'" @click="openGlobInfoAdd(table)">Add Global info</button>
                     </li>
                 </ul>
                 <h3 class="block underline my-2">DM Infos</h3>
                 <ul>
                     <li v-for="dm_info in table.dm_infos">
                         <span>{{ dm_info.info }}</span>
-                        <button @click="openDmInfoEdit(dm_info, table)" class="border"> edit </button>
-                        <button @click="deleteDmInfo(dm_info.id)" class="border border-red-600 mx-2 mt-2"> x </button>
+                        <button v-if="authRole !== 'player'" @click="openDmInfoEdit(dm_info, table)" class="border"> edit </button>
+                        <button v-if="authRole !== 'player'" @click="deleteDmInfo(dm_info.id)" class="border border-red-600 mx-2 mt-2"> x </button>
                     </li>
                     <li class="bg-slate-600">
-                        <button @click="openDmInfoAdd(table)">Add DM info</button>
+                        <button v-if="authRole !== 'player'" @click="openDmInfoAdd(table)">Add DM info</button>
                     </li>
                 </ul>
-                <button @click="openTableEdit(table)" class="border"> edit </button>
-                <button @click="deleteTable(table.id)" class="border border-red-600 mx-2 mt-2"> x </button>
+                <button v-if="authRole !== 'player'" @click="openTableEdit(table)" class="border"> edit </button>
+                <button v-if="authRole !== 'player'" @click="deleteTable(table.id)" class="border border-red-600 mx-2 mt-2"> x </button>
             </li>
             <li class="bg-slate-600">
-                <button @click="openTableAdd">Add table</button>
+                <button v-if="authRole !== 'player'" @click="openTableAdd">Add table</button>
+            </li>
+            <li class="bg-slate-700">
+                <button v-if="authRole !== 'admin'" @click="openTableJoin">Join table</button>
             </li>
         </ul>
     </div>
-    <table-add v-if="tableAdd === true" :table_id="table_id" :close-table-add="closeTableAdd"></table-add>
-    <table-edit v-if="tableEdit === true" :table="selectedTable" :close-table-edit="closeTableEdit"></table-edit>
+    <table-add v-if="tableAdd === true && authRole !== 'player'" :table_id="table_id" :close-table-add="closeTableAdd"></table-add>
+    <table-edit v-if="tableEdit === true && authRole !== 'player'" :table="selectedTable" :close-table-edit="closeTableEdit"></table-edit>
     
-    <glob-info-add v-if="globInfoAdd === true" :table_id="selectedTable.id" :close-glob-info-add="closeGlobInfoAdd"></glob-info-add>
-    <glob-info-edit v-if="globInfoEdit === true" :glob_info="selectedGlobInfo" :close-glob-info-edit="closeGlobInfoEdit"></glob-info-edit>
+    <glob-info-add v-if="globInfoAdd === true && authRole !== 'player'" :table_id="selectedTable.id" :close-glob-info-add="closeGlobInfoAdd"></glob-info-add>
+    <glob-info-edit v-if="globInfoEdit === true && authRole !== 'player'" :glob_info="selectedGlobInfo" :close-glob-info-edit="closeGlobInfoEdit"></glob-info-edit>
     
-    <dm-info-add v-if="dmInfoAdd === true" :table_id="selectedTable.id" :close-dm-info-add="closeDmInfoAdd"></dm-info-add>
-    <dm-info-edit v-if="dmInfoEdit === true" :dm_info="selectedDmInfo" :close-dm-info-edit="closeDmInfoEdit"></dm-info-edit>
+    <dm-info-add v-if="dmInfoAdd === true && authRole !== 'player'" :table_id="selectedTable.id" :close-dm-info-add="closeDmInfoAdd"></dm-info-add>
+    <dm-info-edit v-if="dmInfoEdit === true && authRole !== 'player'" :dm_info="selectedDmInfo" :close-dm-info-edit="closeDmInfoEdit"></dm-info-edit>
 </template>
 
 <script>
@@ -170,7 +173,10 @@ export default {
         },
         char_id: {
             default: () => []
-        }
+        },
+        authRole: {
+            default: () => []
+        },
     },
     methods: {
         deleteTable(table_id) {

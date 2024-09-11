@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'lenpio',
             'email' => 'lenpiotoxix@gmail.com',
             'password' => bcrypt('deidera25'),
+            'role' => 'admin',
         ]);
 
         \App\Models\Character::create([
