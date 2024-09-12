@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\ActionController;
 
 /*
@@ -48,3 +49,4 @@ Route::post('/logout', function () {
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 Route::get('/check/{id}', [UserController::class, 'check'])->name('user.check');
 Route::post('/actions', [ActionController::class,'handle'])->name('action.handle');
+Route::patch('/characters/{character}/update-health', [CharacterController::class, 'updateCharacterHealth']);

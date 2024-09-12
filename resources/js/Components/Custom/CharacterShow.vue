@@ -15,8 +15,14 @@
             <button @click="goToCharInfos" class="w-full border">Char Info</button>
             <button @click="goToTables" class="w-full border">Tables</button>
             <button v-if="authRole !== 'player'" @click="goToChars" class="w-full border">Characters</button>
+            <div>
+                <button @click="minusHp">-</button>
+                <span>{{ character.act_health }}/{{ character.max_health }}</span>
+                <button @click="plusHp">+</button>
+            </div>
         </div>
     </div>
+
 </template>
   
 <script>
@@ -76,6 +82,31 @@ export default {
         toggleUserBrMenu() {
             this.toggleBrMenu();
         },
+        minusHp() {
+            if (this.character.act_health > 0) {
+                this.character.act_health--;
+                this.updateHealth();
+            }
+        },
+        plusHp() {
+            if (this.character.act_health < this.character.max_health) {
+                this.character.act_health++;
+                this.updateHealth();
+            }
+        },
+        updateHealth() {
+        const character = this.character;
+        axios.patch(`/characters/${character.id}/update-health`, {
+            act_health: character.act_health,
+            max_health: character.max_health
+        })
+        .then(response => {
+            console.log(response.data.message);
+        })
+        .catch(error => {
+            console.error('Error updating health:', error);
+        });
+    },
     },
 }
 </script>

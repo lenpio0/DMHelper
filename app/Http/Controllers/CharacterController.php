@@ -16,5 +16,14 @@ class CharacterController extends Controller
         $characters = Character::all();
         return response()->json($characters);
     }
+    
+    public function updateCharacterHealth(Request $request, $characterId) {
+        $character = Character::findOrFail($characterId);
+        $character->act_health = $request->input('act_health');
+        $character->max_health = $request->input('max_health');
+        $character->save();
+    
+        return response()->json(['message' => 'Character health updated successfully']);
+    }
 
 }
