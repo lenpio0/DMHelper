@@ -36,9 +36,8 @@ import TableList from './TableList.vue';
 import CharacterList from './CharacterList.vue';
 
 export default {
-    setup() {
-        const actualTab = ref('items');
-
+    setup(props) {
+        const actualTab = ref(props.initialTab || 'items');
         const goToItems = () => {
             actualTab.value = 'items';
         };
@@ -77,6 +76,7 @@ export default {
              default: () => []
         },
         toggleBrMenu: Function,
+        initialTab: String,
     },
     methods: {
         toggleUserBrMenu() {

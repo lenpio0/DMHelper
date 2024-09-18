@@ -13,6 +13,7 @@ use App\Models\Table;
 use App\Models\GlobInfo;
 use App\Models\DmInfo;
 use App\Models\User;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
 
 class ActionController extends Controller
@@ -25,7 +26,7 @@ class ActionController extends Controller
         // dd($request);
 
         switch ($request->action) {
-            
+
             case "add-char-note":
 
                 $validated = Validator::make($request->only('note'), [
@@ -37,14 +38,22 @@ class ActionController extends Controller
                     'character_id' => $request->char_id
                 ]);
 
-                break;
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'charinfos');
+
+                return redirect()->back();
 
             case 'del-char-note':
 
                 $charNote = CharNote::findOrFail($request->note_id);
                 $charNote->delete();
 
-                break;
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'charinfos');
+
+                return redirect()->back();
 
             case 'edit-char-note':
 
@@ -55,7 +64,11 @@ class ActionController extends Controller
                 $charNote = CharNote::findOrFail($request->note_id);
                 $charNote->update($validated);
 
-                break;
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'charinfos');
+
+                return redirect()->back();
 
             case "add-char-info":
                 $validated = Validator::make($request->only(['info', 'is_secret']), [
@@ -63,22 +76,27 @@ class ActionController extends Controller
                 ])->valid();
 
                 CharInfo::create([
-                    'info' => $validated['info'], 
+                    'info' => $validated['info'],
                     'character_id' => $request->char_id,
                     'is_secret' => $validated['is_secret']
                 ]);
 
                 session()->flash('flash.banner', 'Contenu mis à jour');
-                session()->flash('flash.bannerStyle', 'success');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'charinfos');
 
-                break;
+                return redirect()->back();
 
             case 'del-char-info':
 
                 $charInfo = CharInfo::findOrFail($request->info_id);
                 $charInfo->delete();
 
-                break;
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'charinfos');
+
+                return redirect()->back();
 
             case 'edit-char-info':
 
@@ -89,7 +107,11 @@ class ActionController extends Controller
                 $charInfo = CharInfo::findOrFail($request->info_id);
                 $charInfo->update($validated);
 
-                break;
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'charinfos');
+
+                return redirect()->back();
 
             case "add-buff":
                 $validated = Validator::make($request->only(['name', 'desc', 'is_debuff']), [
@@ -107,16 +129,21 @@ class ActionController extends Controller
                 $character->buffs()->attach($buff);
 
                 session()->flash('flash.banner', 'Contenu mis à jour');
-                session()->flash('flash.bannerStyle', 'success');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'charinfos');
 
-                break;
+                return redirect()->back();
 
             case 'del-buff':
 
                 $buff = Buff::findOrFail($request->buff_id);
                 $buff->delete();
 
-                break;
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'charinfos');
+
+                return redirect()->back();
 
             case 'edit-buff':
 
@@ -128,8 +155,12 @@ class ActionController extends Controller
                 $buff = Buff::findOrFail($request->buff_id);
                 $buff->update($validated);
 
-                break;
-            
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'charinfos');
+
+                return redirect()->back();
+
             case "add-item":
 
                 $validated = Validator::make($request->only(['name', 'desc']), [
@@ -153,6 +184,9 @@ class ActionController extends Controller
                 $item = Item::findOrFail($request->item_id);
                 $item->delete();
 
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'success');
+
                 break;
 
             case 'edit-item':
@@ -165,213 +199,256 @@ class ActionController extends Controller
                 $item = Item::findOrFail($request->item_id);
                 $item->update($validated);
 
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'success');
+
                 break;
 
-                case "add-spell":
+            case "add-spell":
 
-                    $validated = Validator::make($request->only(['name', 'desc']), [
-                        'name' => 'nullable',
-                        'desc' => 'nullable',
-                    ])->valid();
-    
-                    $spell = Spell::create([
-                        'name' => $validated['name'],
-                        'desc' => $validated['desc'],
-                    ]);
+                $validated = Validator::make($request->only(['name', 'desc']), [
+                    'name' => 'nullable',
+                    'desc' => 'nullable',
+                ])->valid();
 
-                    $character = Character::findOrFail($request->char_id);
-                    $character->Spells()->attach($spell);
-    
-                    session()->flash('flash.banner', 'Contenu mis à jour');
-                    session()->flash('flash.bannerStyle', 'success');
-    
-                    break;
-    
-                case 'del-spell':
-    
-                    $spell = Spell::findOrFail($request->spell_id);
-                    $spell->delete();
-    
-                    break;
-    
-                case 'edit-spell':
-    
-                    $validated = Validator::make($request->only(['name', 'desc']), [
-                        'name' => 'nullable',
-                        'desc' => 'nullable',
-                    ])->valid();
-    
-                    $spell = Spell::findOrFail($request->spell_id);
-                    $spell->update($validated);
-    
-                    break;
+                $spell = Spell::create([
+                    'name' => $validated['name'],
+                    'desc' => $validated['desc'],
+                ]);
 
-                case "add-table":
-                    $validated = Validator::make($request->only(['name', 'char_ids']), [
-                        'name' => 'nullable',
-                        'char_ids' => 'array',
-                        'char_ids.*' => 'exists:characters,id', // Ensure character IDs are valid                    
-                    ])->valid();
+                $character = Character::findOrFail($request->char_id);
+                $character->Spells()->attach($spell);
 
-                    $table = Table::create([
-                        'name' => $validated['name'], 
-                    ]);
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'success');
 
-                    // Attach characters to the table
-                    if (isset($validated['char_ids']) && !empty($validated['char_ids'])) {
-                        $table->characters()->sync($validated['char_ids']);
-                    }
-    
-                    session()->flash('flash.banner', 'Contenu mis à jour');
-                    session()->flash('flash.bannerStyle', 'success');
-    
-                    break;
+                break;
 
-                case 'edit-table':
-    
-                    $validated = Validator::make($request->only(['name', 'char_ids']), [
-                        'name' => 'nullable',
-                        'char_ids' => 'array',
-                        'char_ids.*' => 'exists:characters,id', // Ensure character IDs are valid                    
-                    ])->valid();
-        
-                    $table = Table::findOrFail($request->table_id);
-                    $table->update($validated);
-                    
-                    // Sync the character relations (this will remove unselected and add new ones)
-                    if (isset($validated['char_ids'])) {
-                        $table->characters()->sync($validated['char_ids']);
-                    }
+            case 'del-spell':
 
-                    session()->flash('flash.banner', 'Contenu mis à jour');
-                    session()->flash('flash.bannerStyle', 'success');
-        
-                    break;
+                $spell = Spell::findOrFail($request->spell_id);
+                $spell->delete();
 
-                case 'del-table':
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'success');
 
-                    $table = Table::findOrFail($request->table_id);
-                    $table->dmInfos()->delete();
-                    $table->globInfos()->delete();
-                    $table->delete();
+                break;
 
-                    session()->flash('flash.banner', 'Contenu mis à jour');
-                    session()->flash('flash.bannerStyle', 'success');
-    
-                    break;
+            case 'edit-spell':
 
-                case "add-glob-info":
-                    $validated = Validator::make($request->only(['info']), [
-                        'info' => 'nullable',
-                    ])->valid();
-         
-                    GlobInfo::create([
-                        'info' => $validated['info'], 
-                        'table_id' => $request->table_id,
-                    ]);
+                $validated = Validator::make($request->only(['name', 'desc']), [
+                    'name' => 'nullable',
+                    'desc' => 'nullable',
+                ])->valid();
 
-                    session()->flash('flash.banner', 'Contenu mis à jour');
-                    session()->flash('flash.bannerStyle', 'success');
-        
-                    break;
-        
-                case 'del-glob-info':
-        
-                    $globInfo = GlobInfo::findOrFail($request->info_id);
-                    $globInfo->delete();
-        
-                    break;
-        
-                case 'edit-glob-info':
-        
-                    $validated = Validator::make($request->only('info'), [
-                        'info' => 'nullable',
-                    ])->valid();
-        
-                    $globInfo = GlobInfo::findOrFail($request->info_id);
-                    $globInfo->update($validated);
-        
-                    break;
+                $spell = Spell::findOrFail($request->spell_id);
+                $spell->update($validated);
 
-                case 'del-dm-info':
-        
-                    $dmInfo = DmInfo::findOrFail($request->info_id);
-                    $dmInfo->delete();
-            
-                    break;
-                    
-                case "add-dm-info":
-                    $validated = Validator::make($request->only(['info']), [
-                        'info' => 'nullable',
-                    ])->valid();
-             
-                    DmInfo::create([
-                        'info' => $validated['info'], 
-                        'table_id' => $request->table_id,
-                    ]);
-    
-                    session()->flash('flash.banner', 'Contenu mis à jour');
-                    session()->flash('flash.bannerStyle', 'success');
-            
-                    break;
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'success');
 
-                case 'edit-dm-info':
-    
-                    $validated = Validator::make($request->only('info'), [
-                        'info' => 'nullable',
-                    ])->valid();
-        
-                    $dmInfo = DmInfo::findOrFail($request->info_id);
-                    $dmInfo->update($validated);
-        
-                    break;
-    
-                case "add-character":
-                    
-                    $validated = Validator::make($request->only(['name', 'max_health', 'act_health', 'user_id']), [
-                        'name' => 'nullable',
-                        'max_health' => 'nullable',
-                        'act_health' => 'nullable',
-                        'user_id' => 'required|exists:users,id'
-                    ])->valid();
-             
-                    Character::create([
-                        'name' => $validated['name'], 
-                        'max_health' => $validated['max_health'],
-                        'act_health' => $validated['act_health'],
-                        'user_id' => $validated['user_id']
-                    ]);
+                break;
 
-                    break;
+            case "add-table":
+                $validated = Validator::make($request->only(['name', 'char_ids']), [
+                    'name' => 'nullable',
+                    'char_ids' => 'array',
+                    'char_ids.*' => 'exists:characters,id', // Ensure character IDs are valid                    
+                ])->valid();
 
-                case 'edit-character':
+                $table = Table::create([
+                    'name' => $validated['name'],
+                ]);
 
-                    $validated = Validator::make($request->only('name', 'max_health', 'act_health', 'user_id'), [
-                        'name' => 'nullable',
-                        'max_health' => 'nullable',
-                        'act_health' => 'nullable',
-                        'user_id' => 'required|exists:users,id'
-                    ])->valid();
-        
-                    $character = Character::findOrFail($request->char_id);
-                    $character->update($validated);
-        
-                    break;
+                // Attach characters to the table
+                if (isset($validated['char_ids']) && !empty($validated['char_ids'])) {
+                    $table->characters()->sync($validated['char_ids']);
+                }
 
-                case 'del-character':
-    
-                    $char = Character::findOrFail($request->char_id);
-                    $char->delete();
-            
-                    break;
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'tables');
 
-                case 'join-table':
-                    
-                    $char = Character::findOrFail($request->char_id);
-                    $table = Table::findOrFail($request->table_id);
-                    $table->Characters()->attach($char);
-            
-                    break;
+                return redirect()->back();
+
+            case 'edit-table':
+
+                $validated = Validator::make($request->only(['name', 'char_ids']), [
+                    'name' => 'nullable',
+                    'char_ids' => 'array',
+                    'char_ids.*' => 'exists:characters,id', // Ensure character IDs are valid                    
+                ])->valid();
+
+                $table = Table::findOrFail($request->table_id);
+                $table->update($validated);
+
+                // Sync the character relations (this will remove unselected and add new ones)
+                if (isset($validated['char_ids'])) {
+                    $table->characters()->sync($validated['char_ids']);
+                }
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'tables');
+
+                return redirect()->back();
+
+            case 'del-table':
+
+                $table = Table::findOrFail($request->table_id);
+                $table->dmInfos()->delete();
+                $table->globInfos()->delete();
+                $table->delete();
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'tables');
+
+                return redirect()->back();
+
+            case "add-glob-info":
+                $validated = Validator::make($request->only(['info']), [
+                    'info' => 'nullable',
+                ])->valid();
+
+                GlobInfo::create([
+                    'info' => $validated['info'],
+                    'table_id' => $request->table_id,
+                ]);
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'tables');
+
+                return redirect()->back();
+
+            case 'del-glob-info':
+
+                $globInfo = GlobInfo::findOrFail($request->info_id);
+                $globInfo->delete();
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'tables');
+
+                return redirect()->back();
+
+            case 'edit-glob-info':
+
+                $validated = Validator::make($request->only('info'), [
+                    'info' => 'nullable',
+                ])->valid();
+
+                $globInfo = GlobInfo::findOrFail($request->info_id);
+                $globInfo->update($validated);
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'tables');
+
+                return redirect()->back();
+
+            case 'del-dm-info':
+
+                $dmInfo = DmInfo::findOrFail($request->info_id);
+                $dmInfo->delete();
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'tables');
+
+                return redirect()->back();
+
+            case "add-dm-info":
+                $validated = Validator::make($request->only(['info']), [
+                    'info' => 'nullable',
+                ])->valid();
+
+                DmInfo::create([
+                    'info' => $validated['info'],
+                    'table_id' => $request->table_id,
+                ]);
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'tables');
+
+                return redirect()->back();
+
+            case 'edit-dm-info':
+
+                $validated = Validator::make($request->only('info'), [
+                    'info' => 'nullable',
+                ])->valid();
+
+                $dmInfo = DmInfo::findOrFail($request->info_id);
+                $dmInfo->update($validated);
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'tables');
+
+                return redirect()->back();
+
+            case "add-character":
+
+                $validated = Validator::make($request->only(['name', 'max_health', 'act_health', 'user_id']), [
+                    'name' => 'nullable',
+                    'max_health' => 'nullable',
+                    'act_health' => 'nullable',
+                    'user_id' => 'required|exists:users,id'
+                ])->valid();
+
+                Character::create([
+                    'name' => $validated['name'],
+                    'max_health' => $validated['max_health'],
+                    'act_health' => $validated['act_health'],
+                    'user_id' => $validated['user_id']
+                ]);
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'chars');
+
+                return redirect()->back();
+
+            case 'edit-character':
+
+                $validated = Validator::make($request->only('name', 'max_health', 'act_health', 'user_id'), [
+                    'name' => 'nullable',
+                    'max_health' => 'nullable',
+                    'act_health' => 'nullable',
+                    'user_id' => 'required|exists:users,id'
+                ])->valid();
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'chars');
+
+                return redirect()->back();
+
+            case 'del-character':
+
+                $char = Character::findOrFail($request->char_id);
+                $char->delete();
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'chars');
+
+                return redirect()->back();
+
+            case 'join-table':
+
+                $char = Character::findOrFail($request->char_id);
+                $table = Table::findOrFail($request->table_id);
+                $table->Characters()->attach($char);
+
+                session()->flash('flash.banner', 'Contenu mis à jour');
+                session()->flash('flash.bannerStyle', 'Success');
+                session()->flash('flash.tab', 'tables');
+
+                return redirect()->back();
         }
     }
 }

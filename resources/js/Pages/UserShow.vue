@@ -9,7 +9,7 @@
             <button class="bg-slate-300 w-40 block mx-auto my-4" @click="openCharacterAdd" v-if="authUser.role === 'player'">Add Character</button>
             <button class="bg-slate-300 w-40 block mx-auto my-4" @click="logout">disconnect</button>
         </div>
-        <character-show :character="upUser.characters[actualChar]" :toggle-br-menu="toggleBrMenu" :auth-role="authUser.role"></character-show>
+        <character-show :character="upUser.characters[actualChar]" :toggle-br-menu="toggleBrMenu" :auth-role="authUser.role" :initial-tab="flash.tab"></character-show>
         <character-add v-if="characterAdd === true && authUser.role === 'player'" :auth-role="authUser.role" :auth-id="authUser.id" :close-character-add="closeCharacterAdd"></character-add>
     </div>
 </template>
@@ -20,9 +20,11 @@ import CharacterShow from '../Components/Custom/CharacterShow.vue';
 import CharacterAdd from '../Components/Custom/CharacterAdd.vue';
 import axios from 'axios';
 import { Inertia } from '@inertiajs/inertia';
+import { usePage } from '@inertiajs/vue3';
 
 export default {
     setup(props) {
+        const flash = usePage().props.flash || {};
         const brMenu = ref(false);
         const actualChar = ref(0);
         let upUser = props.user;
@@ -70,7 +72,7 @@ export default {
             characterAdd,
             openCharacterAdd,
             closeCharacterAdd,
-
+            flash
         };
     },
     
