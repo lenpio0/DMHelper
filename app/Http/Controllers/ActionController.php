@@ -37,9 +37,6 @@ class ActionController extends Controller
                     'character_id' => $request->char_id
                 ]);
 
-                session()->flash('flash.banner', 'Contenu mis à jour');
-                session()->flash('flash.bannerStyle', 'success');
-
                 break;
 
             case 'del-char-note':

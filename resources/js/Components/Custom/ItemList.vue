@@ -6,7 +6,7 @@
 			<li v-for="(item, index) in items" :key="item.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
 				<span class="block text-xl">{{ item.name }}</span>
 				<span class="block">{{ item.desc }}</span>
-				<button v-if="authRole !== 'player'" @click="openItemEdit(item)" class="border"> edit </button>
+				<button @click="openItemEdit(item)" class="border"> edit </button>
 				<button @click="deleteItem(item.id)" class="border border-red-600 mx-2"> x </button>
 			</li>
 			<li class="bg-slate-600">
@@ -15,7 +15,7 @@
 		</ul>
 	</div>
 	<item-add v-if="itemAdd === true" :char_id="char_id" :close-item-add="closeItemAdd"></item-add>
-	<item-edit v-if="itemEdit === true && authRole !== 'player'" :item="selectedItem" :close-item-edit="closeItemEdit"></item-edit>
+	<item-edit v-if="itemEdit === true" :item="selectedItem" :close-item-edit="closeItemEdit"></item-edit>
 </template>
 
 <script>

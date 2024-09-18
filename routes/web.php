@@ -20,12 +20,20 @@ use App\Http\Controllers\ActionController;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    // DEFAULT
+    // return Inertia::render('Welcome', [
+    //     'canLogin' => Route::has('login'),
+    //     'canRegister' => Route::has('register'),
+    //     'laravelVersion' => Application::VERSION,
+    //     'phpVersion' => PHP_VERSION,
+    // ]);
+    if (Auth::check()) {
+        // Redirect to user's dashboard if authenticated
+        return redirect()->route('user.show', ['id' => Auth::user()->id]);
+    } else {
+        // Redirect to login page if not authenticated
+        return redirect()->route('login');
+    }
 });
 
 Route::middleware([
@@ -36,10 +44,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-});
+
 
 Route::post('/logout', function () {
-    Auth::logout();
+    Auth::guard('web')->logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
     
@@ -50,3 +58,4 @@ Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 Route::get('/check/{id}', [UserController::class, 'check'])->name('user.check');
 Route::post('/actions', [ActionController::class,'handle'])->name('action.handle');
 Route::patch('/characters/{character}/update-health', [CharacterController::class, 'updateCharacterHealth']);
+});

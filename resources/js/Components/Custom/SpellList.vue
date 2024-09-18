@@ -6,7 +6,7 @@
 			<li v-for="(spell, index) in spells" :key="spell.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
 				<span class="block text-xl">{{ spell.name }}</span>
 				<span class="block">{{ spell.desc }}</span>
-				<button v-if="authRole !== 'player'" @click="openSpellEdit(spell)" class="border"> edit </button>
+				<button @click="openSpellEdit(spell)" class="border"> edit </button>
 				<button @click="deleteSpell(spell.id)" class="border border-red-600 mx-2"> x </button>
 			</li>
 			<li class="bg-slate-600">
@@ -15,7 +15,7 @@
 		</ul>
 	</div>
 	<spell-add v-if="spellAdd === true" :char_id="char_id" :close-spell-add="closeSpellAdd"></spell-add>
-	<spell-edit v-if="spellEdit === true && authRole !== 'player'" :spell="selectedSpell" :close-spell-edit="closeSpellEdit"></spell-edit>
+	<spell-edit v-if="spellEdit === true" :spell="selectedSpell" :close-spell-edit="closeSpellEdit"></spell-edit>
 </template>
 
 <script>
