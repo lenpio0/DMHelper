@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => 1,
         ]);
 
-        \App\Models\User::factory(5)->hasCharacters(2)->create()->each(function ($user) {
+        \App\Models\User::factory(9)->hasCharacters(2)->create()->each(function ($user) {
             $user->characters->each(function ($character) {
                 $table = \App\Models\Table::factory(1)->create();
                 $character->tables()->attach($table);

@@ -8,7 +8,7 @@ class TableController extends Controller
 {
     public function fetchAll()
     {
-        $tables = Table::all();
+        $tables = Table::with(['characters', 'globInfos', 'dmInfos'])->get();
         return response()->json($tables);
     }
 }

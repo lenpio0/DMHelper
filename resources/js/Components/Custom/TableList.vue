@@ -3,8 +3,10 @@
     <div class="p-8">
         <h2 class='bg-slate-500 w-36 m-auto'>Tables</h2>
         <ul>
-            <li v-for="(table, index) in tables" :key="table.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
+            <li v-for="(table, index) in (authRole === 'player' ? tables : allTables)" :key="table.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
                 <span class="block text-xl">{{ table.name }}</span>
+                <h3 class="block underline mb-2">DM : {{ table.user_id }}</h3>
+
                 <h3 class="block underline mb-2">characters</h3>
                 <ul>
                     <li v-for="character in table.characters">
@@ -15,26 +17,27 @@
                 <ul>
                     <li v-for="glob_info in table.glob_infos">
                         <span>{{ glob_info.info }}</span>
-                        <button v-if="authRole !== 'player'" @click="openGlobInfoEdit(glob_info)" class="border"> edit </button>
-                        <button v-if="authRole !== 'player'" @click="deleteGlobInfo(glob_info.id)" class="border border-red-600 mx-2 mt-2"> x </button>
+                        <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="openGlobInfoEdit(glob_info)" class="border"> edit </button>
+                        <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="deleteGlobInfo(glob_info.id)" class="border border-red-600 mx-2 mt-2"> x </button>
                     </li>
                     <li class="bg-slate-600">
-                        <button v-if="authRole !== 'player'" @click="openGlobInfoAdd(table)">Add Global info</button>
+                        <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="openGlobInfoAdd(table)">Add Global info</button>
                     </li>
                 </ul>
                 <h3 class="block underline my-2">DM Infos</h3>
                 <ul>
                     <li v-for="dm_info in table.dm_infos">
                         <span>{{ dm_info.info }}</span>
-                        <button v-if="authRole !== 'player'" @click="openDmInfoEdit(dm_info, table)" class="border"> edit </button>
-                        <button v-if="authRole !== 'player'" @click="deleteDmInfo(dm_info.id)" class="border border-red-600 mx-2 mt-2"> x </button>
+                        <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="openDmInfoEdit(dm_info, table)" class="border"> edit </button>
+                        <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="deleteDmInfo(dm_info.id)" class="border border-red-600 mx-2 mt-2"> x </button>
                     </li>
                     <li class="bg-slate-600">
-                        <button v-if="authRole !== 'player'" @click="openDmInfoAdd(table)">Add DM info</button>
+                        <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="openDmInfoAdd(table)">Add DM info</button>
                     </li>
                 </ul>
-                <button v-if="authRole !== 'player'" @click="openTableEdit(table)" class="border"> edit </button>
-                <button v-if="authRole !== 'player'" @click="deleteTable(table.id)" class="border border-red-600 mx-2 mt-2"> x </button>
+                <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="openTableEdit(table)" class="border"> edit </button>
+                <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId"
+                 @click="deleteTable(table.id)" class="border border-red-600 mx-2 mt-2"> x </button>
             </li>
             <li class="bg-slate-600">
                 <button v-if="authRole !== 'player'" @click="openTableAdd">Add table</button>
@@ -52,7 +55,7 @@
             </li>
         </ul>
     </div>
-    <table-add v-if="tableAdd === true && authRole !== 'player'" :table_id="table_id" :close-table-add="closeTableAdd"></table-add>
+    <table-add v-if="tableAdd === true && authRole !== 'player'" :auth-id="authId" :table_id="table_id" :close-table-add="closeTableAdd"></table-add>
     <table-edit v-if="tableEdit === true && authRole !== 'player'" :table="selectedTable" :close-table-edit="closeTableEdit"></table-edit>
     
     <glob-info-add v-if="globInfoAdd === true && authRole !== 'player'" :table_id="selectedTable.id" :close-glob-info-add="closeGlobInfoAdd"></glob-info-add>
@@ -63,7 +66,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import TableAdd from './TableAdd.vue';
 import TableEdit from './TableEdit.vue';
@@ -143,6 +146,8 @@ export default {
         }
 
 
+
+
         return {
             tableAdd,
             openTableAdd,
@@ -164,7 +169,7 @@ export default {
             openDmInfoEdit,
             closeDmInfoEdit,
             selectedGlobInfo,
-            selectedDmInfo
+            selectedDmInfo,
         }
     },
     components: {
@@ -183,6 +188,9 @@ export default {
             default: () => []
         },
         authRole: {
+            default: () => []
+        },
+        authId: {
             default: () => []
         },
     },
@@ -221,11 +229,22 @@ export default {
         fetchTables() {
             axios.get('/api/tables') 
                 .then(response => {
-                    this.allTables = response.data;  // Assuming response contains the list of users
+                    this.allTables = response.data;  // Assuming response contains the list of tables
+
+                    // Sort tables based on authId matching and then by descending user_id
+                    this.allTables = this.allTables.sort((a, b) => {
+                        if (a.user_id === this.authId) return -1;  // Place tables with authId first
+                        if (b.user_id === this.authId) return 1;   // Ensure other tables are sorted lower
+                    
+                        // For tables where user_id doesn't match authId, sort by descending user_id
+                        return a.user_id - b.user_id;
+                    });                    
+                    
                 })
                 .catch(error => {
                     console.error('Error fetching tables:', error);
                 });
+
         },
 
     },

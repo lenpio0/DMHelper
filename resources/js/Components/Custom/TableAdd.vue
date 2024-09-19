@@ -30,6 +30,9 @@ import axios from 'axios';
 export default {
     props: {
         closeTableAdd: Function,
+        authId: {
+            default: () => []
+        },
     },
     data() {
         return {
@@ -47,6 +50,7 @@ export default {
             Inertia.post(route('action.handle'), {
                 name: this.name,
                 char_ids: uniqueCharIds,
+                user_id: this.authId,
                 action: 'add-table'
             });
         },

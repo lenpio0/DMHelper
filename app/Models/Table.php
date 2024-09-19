@@ -16,6 +16,7 @@ class Table extends Model
      */
     protected $fillable = [
         'name',
+        'user_id'
     ];
  
     /**
@@ -41,5 +42,14 @@ class Table extends Model
     {
         return $this->hasMany(GlobInfo::class);
     }
+
+       /**
+     * The user that owns the table.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
 }

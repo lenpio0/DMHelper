@@ -18,6 +18,7 @@ class TableFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
+            'user_id' => $this->faker->numberBetween(1,10),
         ];
     }
 }

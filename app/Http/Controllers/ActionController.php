@@ -250,14 +250,16 @@ class ActionController extends Controller
                 break;
 
             case "add-table":
-                $validated = Validator::make($request->only(['name', 'char_ids']), [
+                $validated = Validator::make($request->only(['name', 'char_ids', 'user_id']), [
                     'name' => 'nullable',
                     'char_ids' => 'array',
-                    'char_ids.*' => 'exists:characters,id', // Ensure character IDs are valid                    
+                    'char_ids.*' => 'exists:characters,id', // Ensure character IDs are valid     
+                    'user_id' => 'exists:users,id',               
                 ])->valid();
 
                 $table = Table::create([
                     'name' => $validated['name'],
+                    'user_id' => $validated['user_id']
                 ]);
 
                 // Attach characters to the table
