@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -40,7 +41,14 @@ class UserController extends Controller
     }
     public function fetchAll()
     {
-        $users = User::all();
+        $users = User::with('characters')->get();
         return response()->json($users);
+    }
+
+    public function goToChar($index, $userId)
+    {
+        // Redirect to the user's page with flash data
+        return Redirect::route('user.show', ['id' => $userId])
+                       ->with('flash', ['tab' => $index]);
     }
 }

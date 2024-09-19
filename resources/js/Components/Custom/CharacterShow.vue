@@ -37,7 +37,8 @@ import CharacterList from './CharacterList.vue';
 
 export default {
     setup(props) {
-        const actualTab = ref(props.initialTab || 'items');
+        const actualTab = ref(['charinfos', 'tables', 'chars'].includes(props.initialTab) ? props.initialTab : 'items');
+    
         const goToItems = () => {
             actualTab.value = 'items';
         };

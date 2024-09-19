@@ -58,4 +58,5 @@ Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 Route::get('/check/{id}', [UserController::class, 'check'])->name('user.check');
 Route::post('/actions', [ActionController::class,'handle'])->name('action.handle');
 Route::patch('/characters/{character}/update-health', [CharacterController::class, 'updateCharacterHealth']);
+Route::get('/go-to-char/{index}/{userId}', [UserController::class, 'goToChar'])->name('goToChar');
 });

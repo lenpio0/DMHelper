@@ -2,7 +2,7 @@
     <div class="bg-gray-800 h-full">
         <div v-show="brMenu" class="fixed bg-gray-900 h-full w-1/3 max-w-80">
             <div class="bg-slate-300 w-40 block mx-auto my-4"><span v-if="authUser.role !== 'player'">Auth :</span><a :href="route('profile.show')">{{ authUser.name }}</a></div>
-            <span class="bg-slate-300 w-40 block mx-auto my-4" v-if="authUser.role !== 'player'">Looking at : {{ upUser.name }}</span>
+            <span class="bg-slate-300 w-40 block mx-auto my-4" v-if="authUser.role !== 'player'">Looking at : {{ actualChar }}</span>
             <li v-for="(character, index) in upUser.characters">
                 <ul class="bg-slate-300 w-40 block mx-auto my-4"><button @click="updateActualChar(index)">{{ character.name }}</button></ul>
             </li>
@@ -24,9 +24,10 @@ import { usePage } from '@inertiajs/vue3';
 
 export default {
     setup(props) {
-        const flash = usePage().props.flash || {};
+        const flash = usePage().props.flash ||  {};
+
         const brMenu = ref(false);
-        const actualChar = ref(0);
+        const actualChar = ref(typeof flash.tab === 'number' ? flash.tab : 0);
         let upUser = props.user;
 
         const toggleBrMenu = () => {
@@ -72,7 +73,7 @@ export default {
             characterAdd,
             openCharacterAdd,
             closeCharacterAdd,
-            flash
+            flash,
         };
     },
     

@@ -4,7 +4,7 @@
         <h2 class='bg-slate-500 w-36 m-auto'>Characters</h2>
         <ul>
             <li v-for="(character, index) in characters" :key="character.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
-                <span class="block">{{ character.name }}</span>
+                <a class="block" @click="goToChar(character.index, character.user_id)">{{ character.name }}</a>
                 <span class="block underline mb-2">{{ character.max_health }} Max HP</span>
                 <span class="block underline mb-2">{{ character.act_health }} HP</span>
                 <span class="block underline mb-2" v-if="users[character.user_id]">{{ users[character.user_id].name }}</span>
@@ -81,15 +81,33 @@ export default {
             });
         },
         fetchUsers() {
-            axios.get('/api/users') 
-                .then(response => {
-                    this.users = response.data;  // Assuming response contains the list of users
-                })
-                .catch(error => {
-                    console.error('Error fetching users:', error);
+        axios.get('/api/users')
+            .then(response => {
+                const usersArray = response.data;
+                const allCharacters = [];
+
+                // Process each user
+                usersArray.forEach(user => {
+                    // Assign index to each character and add to allCharacters
+                    user.characters.forEach((character, index) => {
+                        character.index = index; // Assign the index to each character
+                        allCharacters.push(character);
+                    });
+                    // Map user by id
+                    this.users[user.id] = user;
                 });
-        }
+
+                // Set all characters to the characters array
+                this.characters = allCharacters;
+            })
+            .catch(error => {
+                console.error('Error fetching users:', error);
+            });
+    },        
+    goToChar(index, userId) {
+        Inertia.get(`/go-to-char/${index}/${userId}`);
     },
+},
     data() {
         return {
             characters: [],  // Initialize characters array
