@@ -8,13 +8,14 @@
         <char-info-list v-if="actualTab === 'charinfos'" :auth-role="authRole" :char_infos="character.char_infos" :char_id="character.id"></char-info-list>
         <char-note-list v-if="actualTab === 'charinfos'" :char_notes="character.char_notes" :char_id="character.id"></char-note-list>
         <table-list v-if="actualTab === 'tables'" :auth-role="authRole" :auth-id="authId" :tables="character.tables" :char_id="character.id"></table-list>
-        <character-list v-if="actualTab === 'chars' && authRole !== 'player'"></character-list>
+        <character-list v-if="actualTab === 'chars' && authRole !== 'player'" :auth-id="authId"></character-list>
         <div class="fixed bottom-12 z-10 w-80 flex left-1/2 transform -translate-x-1/2 bg-slate-400">
             <button @click="toggleUserBrMenu" class="w-full border">menu</button>
+            <button v-if="authRole !== 'player'" @click="goToChars" class="w-full border">Characters</button>
+            <button v-if="authRole !== 'player'"@click="goToTables" class="w-full border">Tables</button>
             <button @click="goToItems" class="w-full border">Items Spells</button>
             <button @click="goToCharInfos" class="w-full border">Char Info</button>
-            <button @click="goToTables" class="w-full border">Tables</button>
-            <button v-if="authRole !== 'player'" @click="goToChars" class="w-full border">Characters</button>
+            <button v-if="authRole === 'player'"@click="goToTables" class="w-full border">Tables</button>
             <div>
                 <button @click="minusHp">-</button>
                 <span>{{ character.act_health }}/{{ character.max_health }}</span>

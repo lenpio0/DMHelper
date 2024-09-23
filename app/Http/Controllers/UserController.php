@@ -41,7 +41,7 @@ class UserController extends Controller
     }
     public function fetchAll()
     {
-        $users = User::with('characters')->get();
+        $users = User::with('characters', 'characters.tables')->get();
         return response()->json($users);
     }
 
