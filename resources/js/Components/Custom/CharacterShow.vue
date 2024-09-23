@@ -110,7 +110,7 @@ export default {
         .catch(error => {
             console.error('Error updating health:', error);
         });
-    },
+        },
     },
 }
 </script>

@@ -51,4 +51,12 @@ class UserController extends Controller
         return Redirect::route('user.show', ['id' => $userId])
                        ->with('flash', ['tab' => $index]);
     }
+
+    public function updateRole(Request $request, $userId) {
+        $user = User::findOrFail($userId);
+        $user->role = $request->input('role');
+        $user->save();
+    
+        return response()->json(['message' => 'Role updated']);
+    }
 }
