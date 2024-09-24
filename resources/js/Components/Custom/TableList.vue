@@ -1,9 +1,9 @@
 <!-- TableList.vue -->  
 <template>
-    <div class="p-8">
-        <h2 class='bg-slate-500 w-36 m-auto'>Tables</h2>
+    <div class="py-8">
+        <h2 class='bg-soft-black-3 w-36 m-auto'>Tables</h2>
         <ul>
-            <li v-for="(table, index) in (authRole === 'player' ? tables : allTables)" :key="table.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
+            <li v-for="(table, index) in (authRole === 'player' ? tables : allTables)" :key="table.id" :class="{'bg-soft-black-2': index % 2 === 0,'bg-soft-black-1': index % 2 !== 0}" class="p-3">
                 <span class="block text-xl">{{ table.name }}</span>
                 <h3 class="block underline mb-2">DM : {{ table.user_id }}</h3>
 
@@ -20,7 +20,7 @@
                         <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="openGlobInfoEdit(glob_info)" class="border"> edit </button>
                         <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="deleteGlobInfo(glob_info.id)" class="border border-red-600 mx-2 mt-2"> x </button>
                     </li>
-                    <li class="bg-slate-600">
+                    <li class="bg-soft-black-3">
                         <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="openGlobInfoAdd(table)">Add Global info</button>
                     </li>
                 </ul>
@@ -31,7 +31,7 @@
                         <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="openDmInfoEdit(dm_info, table)" class="border"> edit </button>
                         <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="deleteDmInfo(dm_info.id)" class="border border-red-600 mx-2 mt-2"> x </button>
                     </li>
-                    <li class="bg-slate-600">
+                    <li class="bg-soft-black-3">
                         <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId" @click="openDmInfoAdd(table)">Add DM info</button>
                     </li>
                 </ul>
@@ -39,10 +39,10 @@
                 <button v-if="(authRole === 'admin') || (authRole === 'dm' && table.user_id) === authId"
                  @click="deleteTable(table.id)" class="border border-red-600 mx-2 mt-2"> x </button>
             </li>
-            <li class="bg-slate-600">
+            <li class="bg-soft-black-3">
                 <button v-if="authRole !== 'player'" @click="openTableAdd">Add table</button>
             </li>
-            <li class="bg-slate-700">
+            <li class="bg-soft-black-3">
                 <form @submit.prevent="joinTable"  v-if="authRole === 'player'">
                     <span>Join a table :</span>
                     <select v-model="table_id">

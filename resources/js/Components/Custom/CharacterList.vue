@@ -1,9 +1,9 @@
 <template>
-    <div class="p-8">
-        <h2 class='bg-slate-500 w-36 m-auto'>Characters</h2>
+    <div class="py-8">
+        <h2 class='bg-soft-black-3 w-36 m-auto'>Characters</h2>
         <ul>
             <!-- Loop through the sorted characters -->
-            <li v-for="(character, index) in characters" :key="character.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
+            <li v-for="(character, index) in characters" :key="character.id" :class="{'bg-soft-black-2': index % 2 === 0,'bg-soft-black-1': index % 2 !== 0}" class="p-3">
                 <span>{{ character.name }}</span>
                 <span class="block underline mb-2">{{ character.max_health }} Max HP</span>
                 <span class="block underline mb-2">{{ character.act_health }} HP</span>

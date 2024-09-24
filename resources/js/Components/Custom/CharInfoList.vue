@@ -1,15 +1,15 @@
 <!-- CharInfoList.vue -->
 <template>
-    <div class="p-8">
-        <h2 class='bg-slate-500 w-36 m-auto'>CharInfos</h2>
+    <div class="py-8">
+        <h2 class='bg-soft-black-3 w-36 m-auto'>CharInfos</h2>
         <ul>
-            <li v-for="(char_info, index) in char_infos" :key="char_info.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
+            <li v-for="(char_info, index) in char_infos" :key="char_info.id" :class="{'bg-soft-black-2': index % 2 === 0,'bg-soft-black-1': index % 2 !== 0}" class="p-3">
                 <span class="block">{{ char_info.info }}</span>
                 <span class="block underline mb-2">{{ char_info.is_secret ? "Secret" : "Not secret" }}</span>
                 <button v-if="authRole !== 'player'" @click="openCharInfoEdit(char_info)" class="border"> edit </button>
                 <button v-if="authRole !== 'player'" @click="deleteCharInfo(char_info.id)" class="border border-red-600 mx-2"> x </button>
             </li>
-            <li class="bg-slate-600">
+            <li class="bg-soft-black-3">
                 <button v-if="authRole !== 'player'" @click="openCharInfoAdd">Add info</button>
             </li>
         </ul>
