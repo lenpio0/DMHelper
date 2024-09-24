@@ -5,12 +5,12 @@
             <!-- Loop through the sorted characters -->
             <li v-for="(character, index) in characters" :key="character.id" :class="{'bg-slate-700': index % 2 === 0,'bg-slate-800': index % 2 !== 0}" class="p-3">
                 <span>{{ character.name }}</span>
-                <span class="block underline mb-2">{{ character }} Max HP</span>
+                <span class="block underline mb-2">{{ character.max_health }} Max HP</span>
                 <span class="block underline mb-2">{{ character.act_health }} HP</span>
                 <span class="block underline mb-2" v-if="users[character.user_id]">{{ users[character.user_id].name }}</span>
                 
                 <!-- Conditionally display buttons based on table check -->
-                <div v-if="checkTables(character.tables)">
+                <div v-if="checkTables(character.tables) || authRole == 'admin'">
                     <button @click="openCharacterEdit(character)" class="border"> edit </button>
                     <button @click="deleteCharacter(character.id)" class="border border-red-600 mx-2"> x </button>
                     <button @click="goToChar(character.index, character.user_id)">Go to char</button>
@@ -34,6 +34,7 @@ export default {
             type: Number, // Ensure authId is a number
             required: true,
         },
+        authRole: {}
     },
     setup(props) {
         const characterEdit = ref(false);

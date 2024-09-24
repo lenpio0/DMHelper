@@ -1,9 +1,9 @@
 <template>
     <div class="bg-gray-800 h-full">
         <div v-show="brMenu" class="fixed bg-gray-900 h-full w-1/3 max-w-80">
-            <div class="bg-slate-300 w-40 block mx-auto my-4"><span v-if="authUser.role !== 'player'">Auth :</span><a :href="route('profile.show')">{{ authUser.name }}</a></div>
-            <span class="bg-slate-300 w-40 block mx-auto my-4" v-if="authUser.role !== 'player'">Looking at : {{ actualChar }}</span>
-            <li v-for="(character, index) in upUser.characters">
+            <div class="bg-slate-300 w-40 block mx-auto my-4"><span v-if="authUser.role === 'admin'">Auth :</span><a :href="route('profile.show')">{{ authUser.name }}</a></div>
+            <span class="bg-slate-300 w-40 block mx-auto my-4" v-if="authUser.role === 'admin'">Looking at : {{ upUser.name }}</span>
+            <li v-for="(character, index) in upUser.characters" v-if="authUser.role !== 'dm'">
                 <ul class="bg-slate-300 w-40 block mx-auto my-4"><button @click="updateActualChar(index)">{{ character.name }}</button></ul>
             </li>
             <button class="bg-slate-300 w-40 block mx-auto my-4" @click="openCharacterAdd" v-if="authUser.role === 'player'">Add Character</button>
@@ -60,10 +60,14 @@ export default {
                 .then(response => {
                     // Update the authUser role after successful change
                     props.authUser.role = newRole;
+                    if (newRole === 'player' && props.authUser.id !== upUser.id) {
+                        Inertia.get(route('user.show', { id: props.authUser.id }));
+                    }
                 })
                 .catch(error => {
                     console.error('Error updating role:', error);
                 });
+
         });
 
         const checkUpdate = () => {
