@@ -15,7 +15,8 @@
                     <svg class="relative top-[3px] right-1" width="21px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path fill="#000000" fill-rule="evenodd" d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"/>
 					</svg>
-                    Add Character</button>
+                    Add Character
+                </button>
             </div>
             <div class="pb-12 h-1/2 flex flex-col justify-end">
                 <label class="flex w-40 items-center cursor-pointer bg-soft-black-3 rounded py-2 px-4 border-b-4 border-soft-black-2 mx-auto">
@@ -29,6 +30,7 @@
         </div>
         <character-show :character="upUser.characters[actualChar]" :toggle-br-menu="toggleBrMenu" :auth-role="authUser.role" :auth-id="authUser.id" :initial-tab="flash.tab"></character-show>
         <character-add v-if="characterAdd === true && authUser.role === 'player'" :auth-role="authUser.role" :auth-id="authUser.id" :close-character-add="closeCharacterAdd"></character-add>
+    <div class="h-20"></div>
     </div>
 </template>
 
@@ -61,6 +63,7 @@ export default {
 
         const openCharacterAdd = () => {
             characterAdd.value = true;
+            toggleBrMenu();
         }
         const closeCharacterAdd = () => {
             characterAdd.value = false;
