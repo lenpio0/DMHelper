@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Lenpio',
             'email' => 'lenpiotoxix@gmail.com',
             'password' => bcrypt('deidera25'),
-            'role' => 'admin',
+            'role' => 'dm',
         ]);
 
         \App\Models\User::factory()->create([
@@ -331,7 +331,7 @@ class DatabaseSeeder extends Seeder
         $ultia->spells()->attach($sanctuary);
 
         \App\Models\GlobInfo::create([
-            'info' => 'you were escorting priests, got ambushed by goblins and on of them fleed with the relic you were supposed to protect.',
+            'info' => 'You were escorting priests, got ambushed by goblins and on of them fleed with the relic you were supposed to protect.',
             'table_id' => '1',
         ]);
 
@@ -416,6 +416,5 @@ class DatabaseSeeder extends Seeder
             'character_id' => '11',
             'is_secret' => '1'
         ]);
-
     }
 }

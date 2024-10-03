@@ -3,7 +3,8 @@
     <div class="my-8">
         <h2 class='bg-soft-black-3 w-56 py-1 m-auto rounded-t-lg text-center text-xl font-bold'>CharNotes</h2>
         <ul>
-            <li v-for="(char_note, index) in char_notes" :key="char_note.id" class="p-3 my-2 bg-soft-black-2">
+            <li v-if="char_notes.length === 0" class="p-3 my-2 bg-soft-black-2 text-center text-lg">No Notes yet !</li> 
+            <li v-if="char_notes.length !== 0" v-for="(char_note, index) in char_notes" :key="char_note.id" class="p-3 my-2 bg-soft-black-2">
                 <div class="flex justify-between">
                     <span class="block">{{ char_note.note }}</span>
                     <button @click="deleteCharNote(char_note.id)" class="text-white bg-red-600 border-b-4 border-red-800 font-medium rounded-lg text-sm w-8 h-8 justify-center px-1 text-center inline-flex relative bottom-1 items-center me-2">

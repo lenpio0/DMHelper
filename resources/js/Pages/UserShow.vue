@@ -20,7 +20,7 @@
             </div>
             <div class="pb-12 h-1/2 flex flex-col justify-end">
                 <label class="flex w-40 items-center cursor-pointer bg-soft-black-3 rounded py-2 px-4 border-b-4 border-soft-black-2 mx-auto">
-                    <input type="checkbox" v-model="isDmRole" @change="updateRole" class="sr-only peer">
+                    <input type="checkbox" v-model="isDmRole"  class="sr-only peer">
                     <div class="relative w-11 h-6 bg-gray-400 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-800"></div>
                     <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">DM Mode</span>
                 </label>
@@ -28,9 +28,9 @@
                 <button class="bg-red-600 w-40 block mx-auto font-bold py-2 px-4 border-b-4 border-red-800 rounded-t rounded-b-2xl my-4 text-soft-white-1" @click="toggleBrMenu">Close</button>
             </div>
         </div>
-        <character-show :character="upUser.characters[actualChar]" :toggle-br-menu="toggleBrMenu" :auth-role="authUser.role" :auth-id="authUser.id" :initial-tab="flash.tab"></character-show>
+        <character-show :character="upUser.characters[actualChar]" :up-user-name="upUser.name" :is-dm-role="isDmRole" :toggle-br-menu="toggleBrMenu" :auth-role="authUser.role" :auth-id="authUser.id"  :initial-tab="flash.tab" :open-character-add="openCharacterAdd"></character-show>
         <character-add v-if="characterAdd === true && authUser.role === 'player'" :auth-role="authUser.role" :auth-id="authUser.id" :close-character-add="closeCharacterAdd"></character-add>
-    <div class="h-20"></div>
+    <div v-if="upUser.characters[actualChar] != null || authUser.role === 'dm'" class="h-20"></div>
     </div>
 </template>
 
@@ -63,7 +63,9 @@ export default {
 
         const openCharacterAdd = () => {
             characterAdd.value = true;
-            toggleBrMenu();
+            if (brMenu.value = false) {
+                toggleBrMenu();
+            }
         }
         const closeCharacterAdd = () => {
             characterAdd.value = false;

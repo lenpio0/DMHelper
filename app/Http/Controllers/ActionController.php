@@ -410,7 +410,7 @@ class ActionController extends Controller
 
                 session()->flash('flash.banner', 'Contenu mis à jour');
                 session()->flash('flash.bannerStyle', 'Success');
-                session()->flash('flash.tab', 'chars');
+                session()->flash('flash.tab', 'items');
 
                 return redirect()->back();
 

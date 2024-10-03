@@ -53,10 +53,12 @@ class UserController extends Controller
     }
 
     public function updateRole(Request $request, $userId) {
+
         $user = User::findOrFail($userId);
         $user->role = $request->input('role');
         $user->save();
     
+        session()->flash('flash.tab', 'tables');
         return response()->json(['message' => 'Role updated']);
     }
 }

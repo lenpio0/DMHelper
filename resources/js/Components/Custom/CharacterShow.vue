@@ -1,16 +1,44 @@
 <!-- CharacterShow.vue -->
 <template>
+    <div v-if="character.id == null && authRole === 'player'" class="pt-4 text-soft-white-1 flex justify-center items-center h-screen">
+        <div class="w-[22rem]">
+            <h2 class='bg-soft-black-3 w-56 pt-3 mb-4 pb-2.5 m-auto rounded-lg text-center text-xl font-bold'>Welcome !</h2>
+            <div class="bg-soft-black-2 flex flex-col px-4 py-5 rounded-3xl">
+                <p class="mb-2">DM Helper is a tool for tabletop RPG. </p>
+                <p class="mb-2">As a player, you can use it to write down and update things that need to be frequently updated easier than with your character sheet.</p>
+                <p class="mb-2">As a DM, it let's you manage your tables and their players. You can use it to update characters yourself or pass secret informations.</p>
+                <p class="mb-2">It can't act as a replacement for your sheet (as for now), but a simple picture is enough to play at anytime.</p>
+            </div>
+            <p class="mb-2">To get started, you can either create a player character or enter DM mode :{{ isDmRoleLocal }}</p>
+            <div class="flex h-12">
+                <button class="bg-soft-white-1 w-40 mx-auto font-bold pb-2 px-4 border-b-4 pt-2.5 border-soft-white-2 rounded flex text-black" @click="openCharacterAdd">
+                    <svg class="relative top-[3px] right-1" width="21px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#000000" fill-rule="evenodd" d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"/>
+                    </svg>
+                    Add Character
+                </button>
+                <label class="flex w-40 items-center cursor-pointer bg-soft-black-3 rounded py-2 px-4 border-b-4 border-soft-black-2 mx-auto">
+                    <input type="checkbox" v-model="isDmRoleLocal" class="sr-only peer">
+                    <div class="relative w-11 h-6 bg-gray-400 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-800"></div>
+                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">DM Mode</span>
+                </label>
+            </div>
+        </div>
+    </div>
     <div class="pt-4 text-soft-white-1">
-        <h1 class="block max-w-[80%] m-auto text-center text-2xl font-bold pb-1 border-b-2 border-soft-white-1/25 whitespace-nowrap">{{ character.name }}</h1>
-        <item-list v-if="actualTab === 'items'" :auth-role="authRole" :items="character.items" :char_id="character.id"></item-list>
-        <spell-list v-if="actualTab === 'items'" :auth-role="authRole" :spells="character.spells" :char_id="character.id"></spell-list>
-        <buff-list v-if="actualTab === 'charinfos'" :auth-role="authRole" :buffs="character.buffs" :char_id="character.id"></buff-list>
-        <char-info-list v-if="actualTab === 'charinfos'" :auth-role="authRole" :char_infos="character.char_infos" :char_id="character.id"></char-info-list>
-        <char-note-list v-if="actualTab === 'charinfos'" :char_notes="character.char_notes" :char_id="character.id"></char-note-list>
+        <h1 v-if="character.id != null" class="block max-w-[80%] m-auto text-center text-2xl font-bold pb-1 border-b-2 border-soft-white-1/25 whitespace-nowrap">{{ character.name }}</h1>
+        <h1 v-if="character.id == null" class="block max-w-[80%] m-auto text-center text-2xl font-bold pb-1 border-b-2 border-soft-white-1/25 whitespace-nowrap">{{ upUserName }}</h1>
+        <span v-if="character.id == null && (actualTab === 'charinfos' || actualTab === 'items')" class="p-5 my-2 bg-soft-black-2 text-center text-xl block w-screen fixed top-[36vh]">{{ upUserName }} has no character yet !</span>
+        <item-list v-if="actualTab === 'items' && character.id != null" :auth-role="authRole" :items="character.items" :char_id="character.id"></item-list>
+        <spell-list v-if="actualTab === 'items' && character.id != null" :auth-role="authRole" :spells="character.spells" :char_id="character.id"></spell-list>
+        <buff-list v-if="actualTab === 'charinfos' && character.id != null" :auth-role="authRole" :buffs="character.buffs" :char_id="character.id"></buff-list>
+        <char-info-list v-if="actualTab === 'charinfos' && character.id != null" :auth-role="authRole" :char_infos="character.char_infos" :char_id="character.id"></char-info-list>
+        <char-note-list v-if="actualTab === 'charinfos' && character.id != null" :char_notes="character.char_notes" :char_id="character.id"></char-note-list>
         <table-list v-if="actualTab === 'tables'" :auth-role="authRole" :auth-id="authId" :tables="character.tables" :char_id="character.id"></table-list>
         <character-list v-if="actualTab === 'chars' && authRole !== 'player'" :auth-role="authRole" :auth-id="authId"></character-list>
-        <div class="fixed bottom-0 w-full h-24">
-        <div class=" bg-soft-black-3/75 w-[96%] rounded-3xl h-20 [backdrop-filter:blur(10px)] mx-auto">
+    </div>
+    <div v-if="character.id != null || authRole !== 'player'" class="fixed bottom-0 w-full h-24 text-soft-white-1">
+        <div class="bg-soft-black-3/75 w-[96%] rounded-3xl h-20 [backdrop-filter:blur(10px)] mx-auto">
             <div :class="{'justify-center': authRole === 'dm'}" class="fixed bottom-4 z-10 w-80 flex left-1/2 transform -translate-x-1/2">
                 <button type="button" @click="toggleUserBrMenu" class="border-b-4 border-gray-600 text-white w-12 h-12 bg-gray-500 font-medium rounded-3xl text-sm py-1 text-center inline-flex items-center me-2">
                     <svg width="37px" height="23px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
@@ -31,7 +59,7 @@
                     </svg>
                     <span class="sr-only">Go to characters</span>
                 </button>
-                <button type="button" v-if="authRole !== 'player'"@click="goToTables" class="border-b-4 border-gray-600 text-white w-12 h-12 bg-gray-500 font-medium rounded-3xl text-sm py-1 text-center inline-flex items-center me-2">
+                <button type="button" @click="goToTables" class="border-b-4 border-gray-600 text-white w-12 h-12 bg-gray-500 font-medium rounded-3xl text-sm py-1 text-center inline-flex items-center me-2">
                     <svg width="37px" height="27px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
                         <path id="Vector" d="M3 6H3.01919M3.01919 6H9M3.01919 6C3 6.31438 3 6.70191 3 7.2002V16.8002C3 17.9203 3 18.4796 3.21799 18.9074C3.40973 19.2837 3.71547 19.5905 4.0918 19.7822C4.51921 20 5.079 20 6.19694 20L9 20M3.01919 6C3.04314 5.60768 3.09697 5.3293 3.21799 5.0918C3.40973 4.71547 3.71547 4.40973 4.0918 4.21799C4.51962 4 5.08009 4 6.2002 4H17.8002C18.9203 4 19.4796 4 19.9074 4.21799C20.2837 4.40973 20.5905 4.71547 20.7822 5.0918C20.9032 5.3293 20.957 5.60768 20.9809 6M9 6H20.9809M9 6V20M20.9809 6H21M20.9809 6C21 6.31368 21 6.70021 21 7.19691L21 16.8031C21 17.921 21 18.48 20.7822 18.9074C20.5905 19.2837 20.2837 19.5905 19.9074 19.7822C19.48 20 18.921 20 17.8031 20H9" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -55,12 +83,6 @@
                     </svg>
                     <span class="sr-only">Go to character infos</span>
                 </button>
-                <button type="button" v-if="authRole === 'player' "@click="goToTables" class="border-b-4 border-gray-600 text-white w-12 h-12 bg-gray-500 font-medium rounded-3xl text-sm py-1 text-center inline-flex items-center me-2">
-                    <svg width="37px" height="27px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
-                        <path id="Vector" d="M3 6H3.01919M3.01919 6H9M3.01919 6C3 6.31438 3 6.70191 3 7.2002V16.8002C3 17.9203 3 18.4796 3.21799 18.9074C3.40973 19.2837 3.71547 19.5905 4.0918 19.7822C4.51921 20 5.079 20 6.19694 20L9 20M3.01919 6C3.04314 5.60768 3.09697 5.3293 3.21799 5.0918C3.40973 4.71547 3.71547 4.40973 4.0918 4.21799C4.51962 4 5.08009 4 6.2002 4H17.8002C18.9203 4 19.4796 4 19.9074 4.21799C20.2837 4.40973 20.5905 4.71547 20.7822 5.0918C20.9032 5.3293 20.957 5.60768 20.9809 6M9 6H20.9809M9 6V20M20.9809 6H21M20.9809 6C21 6.31368 21 6.70021 21 7.19691L21 16.8031C21 17.921 21 18.48 20.7822 18.9074C20.5905 19.2837 20.2837 19.5905 19.9074 19.7822C19.48 20 18.921 20 17.8031 20H9" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="sr-only">Go to tables</span>
-                </button>
                 <div v-if="authRole !== 'dm'">
                     <svg class="absolute -bottom-2 right-0 -z-10" width="64px" height="64px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#dc2626"/>
@@ -72,12 +94,12 @@
             </div>
         </div>
     </div>
-    </div>
 
 </template>
   
 <script>
-import { ref } from 'vue';
+import { watch, ref } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
 import ItemList from './ItemList.vue';
 import SpellList from './SpellList.vue';
 import BuffList from './BuffList.vue';
@@ -103,12 +125,30 @@ export default {
             actualTab.value = 'chars';
         };
 
+        let isDmRoleLocal = ref(false);
+
+        watch(isDmRoleLocal, (newValue) => {
+
+            axios.patch(`/users/${props.authId}/role`, { role: 'dm' })
+                .then(response => {
+                    // Update the authUser role after successful change
+                    isDmRoleLocal = 'dm';
+                    Inertia.get(route('user.show', { id: props.authId }), {}, {
+            replace: true,  // Replace the current URL
+            preserveState: false  // Do not preserve the current state
+        });                })
+                .catch(error => {
+                    console.error('Error updating role:', error);
+                });
+        });
+
         return {
             actualTab,
             goToItems,
             goToCharInfos,
             goToTables,
-            goToChars
+            goToChars,
+            isDmRoleLocal
         };
     },
     components: {
@@ -131,7 +171,10 @@ export default {
              default: () => []
         },
         toggleBrMenu: Function,
+        openCharacterAdd: Function,
         initialTab: String,
+        upUserName: String,
+        isDmRole: Boolean,
     },
     methods: {
         toggleUserBrMenu() {

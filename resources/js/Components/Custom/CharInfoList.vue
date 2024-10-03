@@ -3,7 +3,8 @@
     <div class="my-8">
         <h2 class='bg-soft-black-3 w-56 py-1 m-auto rounded-t-lg text-center text-xl font-bold'>CharInfos</h2>
         <ul>
-            <li v-for="(char_info, index) in char_infos" :key="char_info.id" class="p-3 my-2 bg-soft-black-2">
+            <li v-if="char_infos.length === 0" class="p-3 my-2 bg-soft-black-2 text-center text-lg">No Infos yet !</li>     
+            <li v-if="char_infos.length !== 0" v-for="(char_info, index) in char_infos" :key="char_info.id" class="p-3 my-2 bg-soft-black-2">
                 <div class="flex justify-between">
                     <span class="block text-xl w-3/4 border-b border-soft-white-1/25">{{ char_info.is_secret ? "Secret" : "Not secret" }}</span>
                     <button v-if="authRole !== 'player'" @click="deleteCharInfo(char_info.id)" class="text-white bg-red-600 border-b-4 border-red-800 font-medium rounded-lg text-sm w-8 h-8 justify-center px-1 text-center inline-flex relative bottom-1 items-center me-2">

@@ -11,7 +11,7 @@
                     </option>
                 </select> 
                 <input v-model="name" placeholder="Enter your name..." required class="m-3 rounded-3xl text-black">
-                <input v-model="health" placeholder="Enter your health points..." required class="m-3 rounded-3xl text-black">
+                <input v-model="health" type="number" placeholder="Enter your health points..." required class="m-3 rounded-3xl text-black">
                 <div class="flex justify-around pb-2 pt-4">
                     <button @click="closeCharacterAdd" class="bg-red-600 box-content border-b-4 border-red-800 font-medium rounded-lg text-sm w-14 h-9 justify-center px-1 text-center inline-flex left-[2.1rem] items-center">
                         <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -41,23 +41,19 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
 
+    Route::post('/logout', function () {
+        Auth::guard('web')->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        
+        return redirect('/');
+    })->name('logout');
 
-Route::post('/logout', function () {
-    Auth::guard('web')->logout();
-    request()->session()->invalidate();
-    request()->session()->regenerateToken();
-    
-    return redirect('/');
-})->name('logout');
-
-Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
-Route::get('/check/{id}', [UserController::class, 'check'])->name('user.check');
-Route::post('/actions', [ActionController::class,'handle'])->name('action.handle');
-Route::patch('/characters/{character}/update-health', [CharacterController::class, 'updateCharacterHealth']);
-Route::patch('/users/{user}/role', [UserController::class, 'updateRole']);
-Route::get('/go-to-char/{index}/{userId}', [UserController::class, 'goToChar'])->name('goToChar');
+    Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+    Route::get('/check/{id}', [UserController::class, 'check'])->name('user.check');
+    Route::post('/actions', [ActionController::class,'handle'])->name('action.handle');
+    Route::patch('/characters/{character}/update-health', [CharacterController::class, 'updateCharacterHealth']);
+    Route::patch('/users/{user}/role', [UserController::class, 'updateRole']);
+    Route::get('/go-to-char/{index}/{userId}', [UserController::class, 'goToChar'])->name('goToChar');
 });

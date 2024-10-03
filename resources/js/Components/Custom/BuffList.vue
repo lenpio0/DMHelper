@@ -3,7 +3,8 @@
 	<div class="my-8">
 		<h2 class='bg-soft-black-3 w-56 py-1 m-auto rounded-t-lg text-center text-xl font-bold'>Buffs</h2>
 		<ul>
-			<li v-for="(buff, index) in buffs" :key="buff.id" class="p-3 my-2 bg-soft-black-2">
+			<li v-if="buffs.length === 0" class="p-3 my-2 bg-soft-black-2 text-center text-lg">No Buffs yet !</li> 
+			<li v-if="buffs.length !== 0" v-for="(buff, index) in buffs" :key="buff.id" class="p-3 my-2 bg-soft-black-2">
 				<div class="flex justify-between">
 					<span class="block text-xl w-3/4 border-b" :class="{'border-red-600/50': buff.is_debuff == 1, 'border-green-600/50': buff.is_debuff == 0}">{{ buff.name }}</span>
 					<button @click="deleteBuff(buff.id)" class="text-white bg-red-600 border-b-4 border-red-800 font-medium rounded-lg text-sm w-8 h-8 justify-center px-1 text-center inline-flex relative bottom-1 items-center me-2">

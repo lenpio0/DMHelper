@@ -3,7 +3,8 @@
 	<div class="py-8">
 		<h2 class='bg-soft-black-3 w-56 py-1 m-auto rounded-t-lg text-center text-xl font-bold'>Spells</h2>
 		<ul>
-			<li v-for="(spell, index) in spells" :key="spell.id" class="p-3 my-2 bg-soft-black-2">
+			<li v-if="spells.length === 0" class="p-3 my-2 bg-soft-black-2 text-center text-lg">No Spells yet !</li> 
+			<li v-if="spells.length !== 0" v-for="(spell, index) in spells" :key="spell.id" class="p-3 my-2 bg-soft-black-2">
 				<div class="flex justify-between">
 					<span class="block text-xl w-3/4 border-b border-soft-white-1/25">{{ spell.name }}</span>
 					<button @click="deleteSpell(spell.id)" class="text-white bg-red-600 border-b-4 border-red-800 font-medium rounded-lg text-sm w-8 h-8 justify-center px-1 text-center inline-flex relative bottom-1 items-center me-2">
