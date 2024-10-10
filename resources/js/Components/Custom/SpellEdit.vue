@@ -1,11 +1,11 @@
 <!-- SpellEdit.vue -->
 <template>
-    <div class="z-20 fixed backdrop-blur-sm top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
-        <div class="w-80">
-            <h2 class='text-white bg-soft-black-3 w-56 pt-2 pb-1.5 m-auto rounded-t-lg text-center text-xl font-bold'>Edit Spell</h2>
+    <div class="z-50 fixed backdrop-blur-sm top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
+        <div class="w-80 sm:w-[24rem]">
+            <h2 class='text-white bg-soft-black-3 w-56 pt-2 pb-1.5 m-auto rounded-t-lg text-center text-xl font-bold font-albert'>Edit Spell</h2>
             <form @submit.prevent="editSpell" class="bg-soft-black-2 flex flex-col px-2 py-4 rounded-3xl">
                 <input type="text" v-model="name" required class="m-3 rounded-3xl text-black">
-                <textarea v-model="desc" required class="m-3 rounded-2xl text-black"></textarea>
+                <textarea v-model="desc" required rows="4" class="m-3 rounded-2xl text-black"></textarea>
                 <div class="flex justify-around py-2">
                     <button @click="closeSpellEdit" class="bg-red-600 box-content border-b-4 border-red-800 font-medium rounded-lg text-sm w-14 h-9 justify-center px-1 text-center inline-flex left-[2.1rem] items-center">
 						<svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

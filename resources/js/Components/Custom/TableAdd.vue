@@ -1,19 +1,21 @@
 <!-- TableAdd.vue -->
 <template>
-    <div class="z-20 fixed backdrop-blur-sm top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
-        <div class="w-80">
-            <h2 class='text-white bg-soft-black-3 w-56 pt-2 pb-1.5 m-auto rounded-t-lg text-center text-xl font-bold'>Add Table</h2>
+    <div class="z-50 fixed backdrop-blur-sm top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
+        <div class="w-80 sm:w-[24rem]">
+            <h2 class='text-white bg-soft-black-3 w-56 pt-2 pb-1.5 m-auto rounded-t-lg text-center text-xl font-bold font-albert'>Add Table</h2>
             <form @submit.prevent="addTable" class="bg-soft-black-2 flex flex-col px-2 py-4 rounded-3xl">
                 <input v-model="name" placeholder="Table name..." required class="m-3 rounded-3xl text-black">
-                <span class="font-bold ml-3 mt-3 mb-5 text-lg w-1/2 border-b border-soft-white-1/25">Characters</span>
-  <!-- Iterate over the selectedCharacters array to render multiple selects -->
-  <div v-for="(selectedCharacter, index) in selectedCharacters" :key="index" class="mb-2 mx-auto w-full">
-                    <select v-model="selectedCharacters[index]" @change="handleCharacterChange(index)" class="rounded-3xl text-black block mx-auto my-1">
-                        <option value=""></option>
-                        <option v-for="character in characters" :key="character.id" :value="character.id">
-                            {{ character.name }}
-                        </option>
-                    </select>
+                <span class="font-bold ml-3 mt-3 mb-2 text-lg w-1/2">Characters</span>
+                <div class="grid grid-cols-2">
+                    <!-- Iterate over the selectedCharacters array to render multiple selects -->
+                    <div v-for="(selectedCharacter, index) in selectedCharacters" :key="index" class="mb-2 mx-auto w-full">
+                        <select v-model="selectedCharacters[index]" @change="handleCharacterChange(index)" class="rounded-3xl text-black text-sm block mx-auto my-1">
+                            <option value=""></option>
+                            <option v-for="character in characters" :key="character.id" :value="character.id">
+                                {{ character.name }}
+                            </option>
+                        </select>
+                    </div>
                 </div>
                 <div class="flex justify-around pb-2 pt-4">
                     <button @click="closeTableAdd" class="bg-red-600 box-content border-b-4 border-red-800 font-medium rounded-lg text-sm w-14 h-9 justify-center px-1 text-center inline-flex left-[2.1rem] items-center">

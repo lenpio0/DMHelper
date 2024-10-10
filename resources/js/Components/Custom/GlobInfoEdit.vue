@@ -1,8 +1,8 @@
 <!-- GlobInfoEdit.vue -->
 <template>
-    <div class="z-20 fixed backdrop-blur-sm top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
-        <div class="w-80">
-            <h2 class='text-white bg-soft-black-3 w-56 pt-2 pb-1.5 m-auto rounded-t-lg text-center text-xl font-bold'>Edit Table Info</h2>
+    <div class="z-50 fixed backdrop-blur-sm top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
+        <div class="w-80 sm:w-[24rem]">
+            <h2 class='text-white bg-soft-black-3 w-56 pt-2 pb-1.5 m-auto rounded-t-lg text-center text-xl font-bold font-albert'>Edit Table Info</h2>
             <form @submit.prevent="editInfo" class="bg-soft-black-2 flex flex-col px-2 py-4 rounded-3xl">
                 <textarea v-model="info" required rows="3" class="m-3 rounded-2xl text-black"></textarea>
                 <div class="flex justify-around py-2">

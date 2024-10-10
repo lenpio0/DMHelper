@@ -16,6 +16,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                albert: ['Albert Sans', 'sans-serif'],
             },
             colors: {
                 'soft-black-1' : '#222222',

@@ -1,16 +1,16 @@
 <!-- CharacterEdit.vue -->
 <template>
-    <div class="z-20 fixed backdrop-blur-sm top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
-        <div class="w-80">
+    <div class="z-50 fixed backdrop-blur-sm top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-black/50">
+        <div class="w-80 sm:w-[24rem]">
             <h2 class='text-white bg-soft-black-3 w-56 pt-2 pb-1.5 m-auto rounded-t-lg text-center text-xl font-bold'>Edit Character</h2>
             <form @submit.prevent="editCharacter" class="bg-soft-black-2 flex flex-col px-2 py-4 rounded-3xl">
-                <select v-model="user_id" v-if="authRole === 'admin'">
+                <!-- <select v-model="user_id" v-if="authRole === 'admin'">
                     <option v-for="user in users" :key="user.id" :value="user.id">
                         {{ user.name }}
                     </option>
-                </select> 
+                </select>  -->
                 <input v-model="name" :placeholder=character.name required class="m-3 rounded-3xl text-black">
-                <input v-model="health" :placeholder="character.max_health" required class="m-3 rounded-3xl text-black">
+                <input v-model="health" type="number" :placeholder="character.max_health" required class="m-3 rounded-3xl text-black">
                 <div class="flex justify-around pb-2 pt-4">
                     <button @click="closeCharacterEdit" class="bg-red-600 box-content border-b-4 border-red-800 font-medium rounded-lg text-sm w-14 h-9 justify-center px-1 text-center inline-flex left-[2.1rem] items-center">
                         <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
