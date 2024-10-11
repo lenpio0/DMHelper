@@ -4,8 +4,8 @@
 		<h2 class='bg-soft-black-3 w-56 py-1 m-auto rounded-t-lg text-center text-xl font-bold font-albert border-b-4 border-soft-black-2'>Spells</h2>
 		<ul class="py-1">
 			<li v-if="spells.length === 0" class="p-3 my-3 bg-soft-black-2 text-center text-sm font-albert border-b-4 border-soft-black-1/50">No Spells yet !</li> 
-			<li v-if="spells.length !== 0" v-for="(spell, index) in spells" :key="spell.id" class="py-3 my-3 bg-soft-black-2 min-h-32 flex justify-between h-full px-6 sm:px-16 md:px-32 lg:px-56 xl:px-8 border-b-4 border-soft-black-1/50">
-				<div class="flex flex-col w-4/5 overflow-scroll">
+			<li v-if="spells.length !== 0" v-for="(spell, index) in spells" :key="spell.id" class="py-3 my-3 bg-soft-black-2 min-h-32 flex justify-between h-full px-6 sm:px-16 md:px-32 lg:px-56 xl:px-8 2xl:px-36 border-b-4 border-soft-black-1/50">
+				<div class="flex flex-col w-4/5 overflow-scroll no-scrollbar">
 					<span class="block text-xl font-medium w-3/4 border-b border-soft-white-1/25 font-albert mb-3">{{ spell.name }}</span>
 					<span class="block font-albert pr-4 text-sm">{{ spell.desc }}</span>
 				</div>

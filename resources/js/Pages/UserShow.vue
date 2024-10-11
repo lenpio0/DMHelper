@@ -1,7 +1,16 @@
 <template>
     <div class="bg-black/90 min-h-screen flex">
-        <div v-if="authUser.role !== 'player' || upUser.characters[actualChar]" class="w-1/5 h-screen hidden xl:block"></div>
-        <div v-if="authUser.role !== 'player' || upUser.characters[actualChar]" class="w-1/5 h-screen hidden xl:block shadow-black shadow-md z-30 fixed py-12 ">
+        <div v-if="authUser.role !== 'player' || upUser.characters[actualChar]" class="w-1/5 h-screen hidden xl:block">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" class="blur-[11px] fixed left-0 top-0 w-1/5">
+                <defs>
+                    <pattern id="pattern_Z6yFm" patternUnits="userSpaceOnUse" width="33" height="33" patternTransform="rotate(45)">
+                        <line x1="0" y="0" x2="0" y2="33" stroke="#222121" stroke-width="30" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#pattern_Z6yFm)" :opacity="1" />
+            </svg>
+        </div>
+        <div v-if="authUser.role !== 'player' || upUser.characters[actualChar]" class="w-1/5 h-screen hidden xl:block shadow-black shadow-md z-30 fixed py-12">
             <div class="pt-4 flex flex-col h-1/2 bg-soft-black-3/25 rounded-t-3xl mx-8 2xl:mx-12">
                 <span class="bg-soft-black-3 w-40 block font-bold p-2 px-4 text-center mx-auto  my-3 rounded-t-2xl rounded-b border-b-4 border-soft-black-2 text-soft-white-1 font-albert"><span v-if="authUser.role === 'admin'">Auth :</span>{{ authUser.name }}</span>
                 <span class="bg-slate-300 w-40 block mx-auto my-4" v-if="authUser.role === 'admin'">Looking at : {{ upUser.name }}</span>

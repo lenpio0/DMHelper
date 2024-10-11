@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div v-else class="bg-soft-black-1 text-soft-white-1 w-full xl:w-3/5">
+    <div v-else class="text-soft-white-1 w-full xl:w-3/5 bg-[url('https://www.transparenttextures.com/patterns/always-grey.png')] bg-fixed">
         <div v-if="character.id != null && actualTab !== 'chars' && (actualTab !== 'tables' || authRole === 'player')" class="h-22 fixed w-full py-4 z-20 bg-soft-black-1/80 backdrop-blur-lg xl:w-3/5 shadow-black/15 shadow-md">
             <h1 class="block max-w-[60%] sm:max-w-[55%] md:max-w-[45%] lg:max-w-[35%] m-auto text-center text-2xl font-bold pb-1 mt-1.5 border-b-2 border-soft-white-1/25 whitespace-nowrap">{{ character.name }}</h1>
         </div>
@@ -54,7 +54,7 @@
         <div class="h-32"></div>
     </div>
     <div v-if="character.id != null || authRole !== 'player'" class="fixed bottom-0 w-full h-24 text-soft-white-1 shadow-black shadow-md xl:hidden">
-        <div class="bg-soft-black-3/75 w-[96%] sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[35%] 2xl:w-[30%] rounded-3xl h-20 [backdrop-filter:blur(10px)] mx-auto">
+        <div class="bg-soft-black-3/75 w-[96%] sm:w-[60%] md:w-[55%] lg:w-[45%] xl:w-[35%] 2xl:w-[30%] rounded-3xl h-20 [backdrop-filter:blur(10px)] mx-auto">
             <div :class="{'justify-center': authRole === 'dm'}" class="fixed bottom-4 z-10 w-80 flex left-1/2 transform -translate-x-1/2">
                 <button type="button" @click="toggleUserBrMenu" class="border-b-4 border-gray-600 text-white w-12 h-12 bg-gray-500 font-medium rounded-3xl text-sm py-1 text-center items-center me-2 inline-flex xl:hidden">
                     <svg width="37px" height="23px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
@@ -113,6 +113,16 @@
             </div>
         </div>
     </div>
+    <div v-if="character.id != null || authRole !== 'player'" class="fixed bottom-0 w-full h-24 text-soft-white-1 xl:right-0 xl:w-1/5 xl:h-screen shadow-black shadow-md xl:z-30 hidden xl:flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" class="blur-[11px]">
+            <defs>
+                <pattern id="pattern_Z6yFm" patternUnits="userSpaceOnUse" width="33" height="33" patternTransform="rotate(45)">
+                    <line x1="0" y="0" x2="0" y2="33" stroke="#222121" stroke-width="30" />
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#pattern_Z6yFm)" :opacity="1" />
+        </svg>
+            </div>
     <div v-if="character.id != null || authRole !== 'player'" class="fixed bottom-0 w-full h-24 text-soft-white-1 xl:right-0 xl:w-1/5 xl:h-screen shadow-black shadow-md xl:z-30 hidden xl:flex items-center">
         <div class=" py-6 bg-soft-black-3/25 rounded-3xl [backdrop-filter:blur(10px)] mx-auto 2xl:mx-12 w-3/4 flex justify-center items-center">
             <div :class="{'justify-center': authRole === 'dm'}" class="bottom-4 z-10 flex flex-col items-center">

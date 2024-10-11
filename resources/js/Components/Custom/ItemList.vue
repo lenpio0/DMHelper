@@ -4,8 +4,8 @@
 		<h2 class='bg-soft-black-3 font-albert w-56 py-1 m-auto rounded-t-lg text-center text-xl font-bold border-b-4 border-soft-black-2'>Items</h2>
 		<ul class="py-1">
 			<li v-if="items.length === 0" class="p-3 my-3 bg-soft-black-2 text-center font-albert text-sm border-soft-black-1/50">No Items yet !</li> 
-			<li v-if="items.length !== 0" v-for="(item, index) in items" :key="item.id" class="py-3 my-3 bg-soft-black-2 min-h-32 flex justify-between h-full px-6 sm:px-16 md:px-32 lg:px-56 xl:px-8 border-b-4 border-soft-black-1/50">
-				<div class="flex flex-col w-4/5 overflow-scroll">
+			<li v-if="items.length !== 0" v-for="(item, index) in items" :key="item.id" class="py-3 my-3 bg-soft-black-2 min-h-32 flex justify-between h-full px-6 sm:px-16 md:px-32 lg:px-56 xl:px-8 2xl:px-36 border-b-4 border-soft-black-1/50">
+				<div class="flex flex-col w-4/5 overflow-scroll no-scrollbar">
 					<span class="block font-albert font-medium text-xl w-3/4 border-b border-soft-white-1/25 mb-3">{{ item.name }}</span>
 					<span class="block pr-4 font-albert text-sm">{{ item.desc }}</span>
 				</div>

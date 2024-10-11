@@ -4,8 +4,8 @@
 		<h2 class='bg-soft-black-3 w-56 py-1 m-auto rounded-t-lg text-center text-xl font-bold font-albert border-b-4 border-soft-black-2'>Buffs</h2>
 		<ul class="py-1">
 			<li v-if="buffs.length === 0" class="font-albert p-3 my-3 bg-soft-black-2 text-center text-sm border-b-4 border-soft-black-1/50">No Buffs yet !</li> 
-			<li v-if="buffs.length !== 0" v-for="(buff, index) in buffs" :key="buff.id" class="p-3 my-3 bg-soft-black-2 min-h-32 flex justify-between h-full sm:px-16 md:px-32 lg:px-56 xl:px-[360px] 2xl:px-[480px] border-b-4 border-soft-black-1/50">
-				<div class="flex flex-col w-4/5 overflow-scroll">
+			<li v-if="buffs.length !== 0" v-for="(buff, index) in buffs" :key="buff.id" class="p-3 my-3 bg-soft-black-2 min-h-32 flex justify-between h-full sm:px-16 md:px-32 lg:px-56 xl:px-8 2xl:px-36 border-b-4 border-soft-black-1/50">
+				<div class="flex flex-col w-4/5 overflow-scroll no-scrollbar">
 					<span class="mb-3 font-albert font-medium block text-xl w-3/4 border-b" :class="{'border-red-600/50': buff.is_debuff == 1, 'border-green-600/50': buff.is_debuff == 0}">{{ buff.name }}</span>
 					<span class="block pr-4 font-albert text-sm">{{ buff.desc }}</span>
 				</div>
