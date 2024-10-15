@@ -350,7 +350,7 @@ class DatabaseSeeder extends Seeder
             'table_id' => '2',
         ]);
 
-        $sigmar_bless = \App\Models\buff::create([
+        $sigmar_bless = \App\Models\Buff::create([
             'name' => 'Blessed by Sigmar',
             'desc' => '+1 strength, +1 endurance, unknown duration',
             'is_debuff' => '0',
@@ -359,14 +359,14 @@ class DatabaseSeeder extends Seeder
         $larandel->buffs()->attach($sigmar_bless);
         $sunbringer->buffs()->attach($sigmar_bless);
 
-        $broken_finger = \App\Models\buff::create([
+        $broken_finger = \App\Models\Buff::create([
             'name' => 'Broken finger',
             'desc' => '-10 dexterity and -10 strength to all tests requiring hands, until healed by a medecine test',
             'is_debuff' => '1',
         ]);
         $hugo->buffs()->attach($broken_finger);
 
-        $hangover = \App\Models\buff::create([
+        $hangover = \App\Models\Buff::create([
             'name' => 'Hangover',
             'desc' => '-10 to sociability tests, -5 to all others test, until rest',
             'is_debuff' => '1',
@@ -374,7 +374,7 @@ class DatabaseSeeder extends Seeder
         $gurk->buffs()->attach($hangover);
         $jan->buffs()->attach($hangover);
 
-        $magic_luck = \App\Models\buff::create([
+        $magic_luck = \App\Models\Buff::create([
             'name' => 'Lucky',
             'desc' => 'You can throw the dices again on any test of your choice, once per day, last 7 days',
             'is_debuff' => '2',
